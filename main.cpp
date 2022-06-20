@@ -1,10 +1,6 @@
-//#include <iostream>
 #include "src/glsl_shader.h"
 #include "src/gui.h"
 #include "src/mesh.h"
-
-//
-//// create model
 
 std::vector<Vertex> vertices;
 std::vector<unsigned int> indices;
