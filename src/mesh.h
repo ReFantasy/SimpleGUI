@@ -66,4 +66,35 @@ class Points : public Mesh
     }
 };
 
+class SphereGen
+{
+  private:
+    int numVertices;
+    int numIndices;
+    std::vector<int> indices;
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec2> texCoords;
+    std::vector<glm::vec3> normals;
+    std::vector<glm::vec3> tangents;
+    void init(int);
+    float toRadians(float degrees);
+
+  public:
+    SphereGen();
+    SphereGen(int prec);
+    int getNumVertices();
+    int getNumIndices();
+    std::vector<int> getIndices();
+    std::vector<glm::vec3> getVertices();
+    std::vector<glm::vec2> getTexCoords();
+    std::vector<glm::vec3> getNormals();
+    std::vector<glm::vec3> getTangents();
+};
+
+class Sphere : public Mesh
+{
+  public:
+    explicit Sphere(std::vector<Vertex> vertices = std::vector<Vertex>{},
+                    std::vector<float> radius = std::vector<float>{}, int prec = 48);
+};
 #endif // GUI_MESH_H

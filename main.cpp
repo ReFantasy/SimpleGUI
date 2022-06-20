@@ -19,6 +19,7 @@ std::vector<Vertex> vertices;
 std::vector<unsigned int> indices;
 Mesh mesh(vertices, indices);
 Points pts{};
+Sphere sp{};
 
 class GUI3D : public GUI
 {
@@ -27,8 +28,9 @@ class GUI3D : public GUI
 
     void Render() override
     {
-        // mesh.Draw(this->_shader.GetShaderID());
-        pts.Draw(this->_shader.GetShaderID());
+        mesh.Draw(this->_shader.GetShaderID());
+        // pts.Draw(this->_shader.GetShaderID());
+        sp.Draw(this->_shader.GetShaderID());
     }
 };
 
@@ -66,6 +68,15 @@ int main(int argc, char *argv[])
     pts = Points(vertices);
     pts.GenGLBuffers();
     pts.SetPointSize(4);
+
+    std::vector<float> Rs;
+    Rs.push_back(0.5);
+    Rs.push_back(0.1);
+    Rs.push_back(0.1);
+    Rs.push_back(0.1);
+
+    sp = Sphere(vertices, Rs);
+    sp.GenGLBuffers();
 
     gui.SetVsync();
 
