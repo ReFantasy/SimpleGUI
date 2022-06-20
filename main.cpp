@@ -1,5 +1,15 @@
 #include "src/gui.h"
 #include "src/mesh.h"
+#include <random>
+
+template <typename T, typename Distribution = std::uniform_real_distribution<T>>
+T RandomNumber(const T &lo = 0, const T &hi = 1)
+{
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    Distribution dist(lo, hi);
+    return dist(rng);
+}
 
 void PrintGLInfo()
 {
@@ -28,8 +38,8 @@ class GUI3D : public GUI
 
     void Render() override
     {
-        mesh.Draw(this->_shader.GetShaderID());
-        // pts.Draw(this->_shader.GetShaderID());
+        // mesh.Draw(this->_shader.GetShaderID());
+        //  pts.Draw(this->_shader.GetShaderID());
         sp.Draw(this->_shader.GetShaderID());
     }
 };
@@ -70,12 +80,17 @@ int main(int argc, char *argv[])
     pts.SetPointSize(4);
 
     std::vector<float> Rs;
-    Rs.push_back(0.5);
-    Rs.push_back(0.1);
-    Rs.push_back(0.1);
-    Rs.push_back(0.1);
+    vertices.clear();
+    for (int i = 0; i < 3000; i++)
+    {
+        Rs.push_back(0.01);
+        Vertex v;
+        v.Position = glm::vec3(RandomNumber(-1.0f, 1.0f), RandomNumber(-1.0f, 1.0f), 0);
+        v.Color = glm::vec3(RandomNumber(0.0f, 1.0f), RandomNumber(0.0f, 1.0f), RandomNumber(0.0f, 1.0f));
+        vertices.push_back(v);
+    }
 
-    sp = Sphere(vertices, Rs);
+    sp = Sphere(vertices, Rs, 12);
     sp.GenGLBuffers();
 
     gui.SetVsync();
