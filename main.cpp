@@ -27,8 +27,8 @@ class GUI3D : public GUI
 
     void Render() override
     {
-        mesh.Draw(this->_shader.GetShaderID());
-        // pts.Draw(this->_shader.GetShaderID());
+        // mesh.Draw(this->_shader.GetShaderID());
+        pts.Draw(this->_shader.GetShaderID());
     }
 };
 
