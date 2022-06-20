@@ -7,18 +7,14 @@
 
 #include "gui_base.h"
 
-
-class GUI:public GUIBase
+class GUI : public GUIBase
 {
-public:
-	using GUIBase::GUIBase;
+  public:
+    using GUIBase::GUIBase;
 
-	//void Render() override;
-
-protected:
-	// 内置着色器
-	GLSLShader _shader;
+  protected:
+    // 内置着色器
+    GLSLShader _shader;
 };
 
-
-#endif //GUI_GUI_H
+#endif // GUI_GUI_H

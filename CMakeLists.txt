@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 # OpenGL
 find_package(OpenGL REQUIRED)
-include_directories( ${OPENGL_INCLUDE_DIRS} )
+include_directories(${OPENGL_INCLUDE_DIRS})
 link_libraries(${OPENGL_LIBRARIES})
 
 # GLFW
@@ -29,6 +29,6 @@ include_directories("/opt/homebrew/Cellar/glm/0.9.9.8/include")
 
 add_subdirectory(src)
 
-add_executable(main  main.cpp)
+add_executable(main main.cpp)
 target_link_libraries(main gui)
 
