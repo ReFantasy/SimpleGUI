@@ -18,7 +18,7 @@ class GUI3D : public GUI
 
 int main(int argc, char *argv[])
 {
-    GUI3D gui(600, 600, "OpenGL Window");
+    GUI3D gui;
 
     Vertex v1;
     Vertex v2;

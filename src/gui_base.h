@@ -7,22 +7,28 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "glm/glm.hpp"
-#include "glsl_shader.h"
 #include <iostream>
 #include <memory>
 #include <string>
 
 // 窗口默认宽度
-#define WIDTH_DEFAULT 600
+#define WIDTH_DEFAULT 512
 // 默认窗口高度
-#define HEIGHT_DEFAULT 600
+#define HEIGHT_DEFAULT 512
+// 窗口默认名称
+#define WIN_NAME_DEFAULT "OpenGL Window"
+// 窗口默认背景颜色
+#define WIN_BG_COLOR_DEFAULT                                                                                           \
+    {                                                                                                                  \
+        0.067f, 0.184f, 0.255f, 1.0f                                                                                   \
+    }
 
 class GUIBase
 {
   public:
-    explicit GUIBase(int width = WIDTH_DEFAULT, int height = HEIGHT_DEFAULT, std::string title = "OpenGL Window",
-                     glm::vec4 bg_color = glm::vec4{0.067f, 0.184f, 0.255f, 1.0f})
-        : _width(width), _height(height), _window_title(std::move(title)), _bg_color(std::move(bg_color))
+    explicit GUIBase(int width = WIDTH_DEFAULT, int height = HEIGHT_DEFAULT, std::string title = WIN_NAME_DEFAULT,
+                     glm::vec4 bg_color = WIN_BG_COLOR_DEFAULT)
+        : _width(width), _height(height), _window_title(std::move(title)), _bg_color(bg_color)
     {
         InitOpenGL();
     }

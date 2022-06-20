@@ -5,6 +5,7 @@
 #ifndef GUI_GUI_H
 #define GUI_GUI_H
 
+#include "glsl_shader.h"
 #include "gui_base.h"
 
 class GUI : public GUIBase
