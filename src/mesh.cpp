@@ -58,8 +58,6 @@ void Points::Draw(GLuint shader_program)
     glUseProgram(shader_program);
     glBindVertexArray(VAO);
 
-    glPointSize(_size > 0 ? _size : 1.0f);
-    // glDrawElements(GL_POINTS, _indices.size(), GL_UNSIGNED_INT, 0);
     glDrawArrays(GL_POINTS, 0, _vertices.size());
 
     glBindVertexArray(0);

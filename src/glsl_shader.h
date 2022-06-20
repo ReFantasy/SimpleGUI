@@ -14,10 +14,73 @@ class GLSLShader
   public:
     GLSLShader()
     {
-        // BuildInShader();
+        BuildInShader();
     }
 
-    virtual void BuildInShader() = 0;
+    void BuildInShader()
+    {
+        std::string vs = R"(
+		#version 410 core
+        layout(location = 0) in vec3 _position;
+		layout(location = 1) in vec3 _normal;
+		layout(location = 2) in vec3 _color;
+
+        out VS_OUT {
+         vec3 FragPos;
+		 vec3 Normal;
+         vec3 Color;
+        } vs_out;
+
+        uniform bool is_circle;
+
+        void main()
+        {
+		   vs_out.Normal = _normal;
+           vs_out.Color = _color;
+           gl_Position = vec4(_position.x, _position.y, _position.z, 1.0);
+        }
+	    )";
+
+        std::string gs = R"(
+		#version 410 core
+        layout (points) in;
+        layout (points, max_vertices = 1) out;
+
+        in VS_OUT {
+        vec3 FragPos;
+        vec3 Normal;
+        vec3 Color;
+        } gs_in[];
+
+        out vec3 _Color;
+
+        uniform bool is_circle;
+
+        void main()
+        {
+          _Color = gs_in[0].Color;
+          gl_Position = gl_in[0].gl_Position;
+          EmitVertex();
+          EndPrimitive();
+        }
+	    )";
+
+        std::string fs = R"(
+		#version 410 core
+        in vec3 _Color;
+        out vec4 FragColor;
+        void main()
+        {
+           FragColor = vec4(_Color, 1.0f);
+        }
+        )";
+
+        LoadShaderFromString(vs, fs, gs);
+
+        glUseProgram(ID);
+        // setInt("prec", 12);
+        glUseProgram(0);
+    }
 
     unsigned int GetShaderID() const
     {
@@ -231,46 +294,8 @@ class GLSLShader
         }
     }
 
-  private:
+  protected:
     unsigned int ID = 0;
-};
-
-class MeshShader : public GLSLShader
-{
-  public:
-    void BuildInShader() override
-    {
-        std::string vs = R"(
-		#version 410 core
-        layout(location = 0) in vec3 _position;
-		layout(location = 1) in vec3 _normal;
-		layout(location = 2) in vec3 _color;
-        out vec3 FragPos;
-		out vec3 Normal;
-        out vec3 Color;
-
-        void main()
-        {
-           gl_Position = vec4(_position.x, _position.y, _position.z, 1.0);
-		   Normal = _normal;
-           Color = _color;
-        }
-	    )";
-
-        std::string fs = R"(
-		#version 410 core
-        in vec3 Color;
-		in vec3 Normal;
-		in vec3 FragPos;
-        out vec4 FragColor;
-        void main()
-        {
-           FragColor = vec4(Color, 1.0f);
-        }
-        )";
-
-        LoadShaderFromString(vs, fs, std::string{});
-    }
 };
 
 #endif

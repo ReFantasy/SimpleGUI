@@ -9,17 +9,6 @@
 #include "gui_base.h"
 #include "mesh.h"
 
-struct Shader
-{
-    Shader()
-    {
-        mesh.BuildInShader();
-        point.BuildInShader();
-    }
-    MeshShader mesh;
-    MeshShader point;
-};
-
 class GUI : public GUIBase
 {
   public:
@@ -27,7 +16,7 @@ class GUI : public GUIBase
 
   protected:
     // 内置着色器
-    Shader _shader;
+    GLSLShader _shader;
 };
 
 #endif // GUI_GUI_H

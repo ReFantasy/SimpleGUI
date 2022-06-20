@@ -58,19 +58,12 @@ class Points : public Mesh
   public:
     explicit Points(std::vector<Vertex> vertices = std::vector<Vertex>{}) : Mesh(std::move(vertices), {})
     {
-        //        for (int i = 0; i < _vertices.size(); i++)
-        //        {
-        //            _indices.push_back(i);
-        //        }
     }
     void Draw(GLuint shader_program) override;
     void SetPointSize(float sz)
     {
-        _size = sz;
+        glPointSize(sz > 0 ? sz : 1.0f);
     }
-
-  private:
-    float _size = 1.0;
 };
 
 #endif // GUI_MESH_H

@@ -1,10 +1,24 @@
 #include "src/gui.h"
 #include "src/mesh.h"
 
+void PrintGLInfo()
+{
+    printf("\n-------------------------------- OpenGL Infomation -------------------------------\n");
+    printf("  GL_VENDOR  :             %s\n", glGetString(GL_VENDOR));
+    printf("  GL_RENDERER:             %s\n", glGetString(GL_RENDERER));
+    printf("  GL_VERSION :             %s\n", glGetString(GL_VERSION));
+    printf("  GLU_VERSION:             %s\n", gluGetString(GLU_VERSION));
+    GLint buffers = 0, samples = 0;
+    glGetIntegerv(GL_SAMPLE_BUFFERS, &buffers);
+    glGetIntegerv(GL_SAMPLES, &samples);
+    if (buffers != 0)
+        printf("  GL MULTISAMPLE ON:       buffers %d   samples  %d\n", buffers, samples);
+}
+
 std::vector<Vertex> vertices;
 std::vector<unsigned int> indices;
 Mesh mesh(vertices, indices);
-Points pts({});
+Points pts{};
 
 class GUI3D : public GUI
 {
@@ -13,14 +27,15 @@ class GUI3D : public GUI
 
     void Render() override
     {
-        // mesh.Draw(this->_shader.mesh.GetShaderID());
-        pts.Draw(this->_shader.point.GetShaderID());
+        mesh.Draw(this->_shader.GetShaderID());
+        // pts.Draw(this->_shader.GetShaderID());
     }
 };
 
 int main(int argc, char *argv[])
 {
-    GUI3D gui;
+
+    GUI3D gui(800, 800);
 
     Vertex v1;
     Vertex v2;
@@ -50,9 +65,10 @@ int main(int argc, char *argv[])
 
     pts = Points(vertices);
     pts.GenGLBuffers();
-    pts.SetPointSize(6);
+    pts.SetPointSize(4);
 
     gui.SetVsync();
+
     gui.Show();
 
     return 0;
