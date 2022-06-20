@@ -1,6 +1,9 @@
-//
-// Created by refantasy on 2022/6/20.
-//
+/*
+ * Created by refantasy on 2022/6/20.
+ *
+ * 图形界面基类，负责窗口循环、显示以及相关参数的初始化
+ *
+ */
 
 #ifndef GUI_GUI_BASE_H
 #define GUI_GUI_BASE_H
@@ -34,8 +37,22 @@ class GUIBase
     }
     virtual ~GUIBase() = default;
 
-    void MainLoop();
+    /**
+     * 垂直同步设置
+     * @param vsync 如果为 true ，同步，否则不同步
+     */
+    static void SetVsync(bool vsync = true);
 
+    /**
+     * 进入窗口事件循环
+     * 每次循环调用 Render() 函数进行渲染
+     */
+    void Show();
+
+  protected:
+    /**
+     * 纯虚函数，重载执行渲染任务
+     */
     virtual void Render() = 0;
 
   protected:
@@ -52,6 +69,7 @@ class GUIBase
 
   private:
     int InitOpenGL();
+    double Fps();
 };
 
 #endif // GUI_GUI_BASE_H

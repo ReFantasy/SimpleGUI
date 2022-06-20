@@ -4,6 +4,7 @@
 std::vector<Vertex> vertices;
 std::vector<unsigned int> indices;
 Mesh mesh(vertices, indices);
+Points pts({});
 
 class GUI3D : public GUI
 {
@@ -12,7 +13,8 @@ class GUI3D : public GUI
 
     void Render() override
     {
-        mesh.Draw(this->_shader.GetShaderID());
+        // mesh.Draw(this->_shader.mesh.GetShaderID());
+        pts.Draw(this->_shader.point.GetShaderID());
     }
 };
 
@@ -41,13 +43,17 @@ int main(int argc, char *argv[])
     vertices.push_back(v2);
     vertices.push_back(v3);
     vertices.push_back(v4);
+
     mesh._vertices = vertices;
     mesh._indices = indices;
     mesh.GenGLBuffers();
 
-    // shader.BuildInShader();
+    pts = Points(vertices);
+    pts.GenGLBuffers();
+    pts.SetPointSize(6);
 
-    gui.MainLoop();
+    gui.SetVsync();
+    gui.Show();
 
     return 0;
 }

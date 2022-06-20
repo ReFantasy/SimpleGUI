@@ -14,8 +14,10 @@ class GLSLShader
   public:
     GLSLShader()
     {
-        BuildInShader();
+        // BuildInShader();
     }
+
+    virtual void BuildInShader() = 0;
 
     unsigned int GetShaderID() const
     {
@@ -229,7 +231,14 @@ class GLSLShader
         }
     }
 
-    void BuildInShader()
+  private:
+    unsigned int ID = 0;
+};
+
+class MeshShader : public GLSLShader
+{
+  public:
+    void BuildInShader() override
     {
         std::string vs = R"(
 		#version 410 core
@@ -262,9 +271,6 @@ class GLSLShader
 
         LoadShaderFromString(vs, fs, std::string{});
     }
-
-  private:
-    unsigned int ID = 0;
 };
 
 #endif

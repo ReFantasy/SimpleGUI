@@ -29,7 +29,7 @@ int GUIBase::InitOpenGL()
     /* Make the window's context current */
     glfwMakeContextCurrent(_window_id);
     /* Enable vsync */
-    glfwSwapInterval(1);
+    glfwSwapInterval(0);
 
     glfwSetFramebufferSizeCallback(_window_id,
                                    [](GLFWwindow *window, int width, int height) { glViewport(0, 0, width, height); });
@@ -47,7 +47,27 @@ int GUIBase::InitOpenGL()
     return 0;
 }
 
-void GUIBase::MainLoop()
+void GUIBase::SetVsync(bool vsync)
+{
+    glfwSwapInterval(vsync);
+}
+
+double GUIBase::Fps()
+{
+    static double last_frame = 0;
+    double cur_frame = glfwGetTime();
+    auto fps = 1.0 / (cur_frame - last_frame);
+    auto fps_str = std::to_string(fps);
+    fps_str = fps_str.substr(0, fps_str.find('.'));
+    last_frame = cur_frame;
+
+    // show FPS
+    glfwSetWindowTitle(_window_id, (_window_title + "  FPS:" + fps_str).c_str());
+
+    return fps;
+}
+
+void GUIBase::Show()
 {
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(_window_id))
@@ -57,6 +77,9 @@ void GUIBase::MainLoop()
         glClearColor(_bg_color[0], _bg_color[1], _bg_color[2], _bg_color[3]);
 
         Render();
+
+        /* something else */
+        Fps();
 
         /* Swap front and back buffers */
         glfwSwapBuffers(_window_id);
