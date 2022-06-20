@@ -1,6 +1,7 @@
 #include "src/gui.h"
 #include "src/mesh.h"
 
+// 1
 std::vector<Vertex> vertices;
 std::vector<unsigned int> indices;
 Mesh mesh(vertices, indices);
