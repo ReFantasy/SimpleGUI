@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
 
     std::vector<float> Rs;
     vertices.clear();
-    for (int i = 0; i < 3000; i++)
+    for (int i = 0; i < 300; i++)
     {
         Rs.push_back(0.01);
         Vertex v;
