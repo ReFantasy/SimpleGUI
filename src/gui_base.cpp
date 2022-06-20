@@ -2,7 +2,7 @@
 // Created by refantasy on 2022/6/20.
 //
 
-#include "gui.h"
+#include "gui_base.h"
 
 int GUIBase::InitOpenGL()
 {
@@ -33,11 +33,11 @@ int GUIBase::InitOpenGL()
 
 	glfwSetFramebufferSizeCallback(_window_id,[](GLFWwindow* window, int width, int height){ glViewport(0, 0, width, height); });
 
-	// glad: load all OpenGL function pointers
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	GLenum err = glewInit();
+	if (err != GLEW_OK)
 	{
-		std::cout << "Failed to initialize GLAD" << std::endl;
-		return -1;
+		fprintf(stderr, "GLEW Error: %s\n", glewGetErrorString(err));
+		exit(EXIT_FAILURE);
 	}
 
 	glEnable(GL_DEPTH_TEST);
@@ -54,6 +54,8 @@ void GUIBase::MainLoop()
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(_bg_color[0], _bg_color[1], _bg_color[2], _bg_color[3]);
+
+		Render();
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(_window_id);

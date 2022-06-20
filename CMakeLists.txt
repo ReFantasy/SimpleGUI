@@ -17,14 +17,18 @@ include_directories("/opt/homebrew/Cellar/glfw/3.3.7/include")
 link_directories("/opt/homebrew/Cellar/glfw/3.3.7/lib")
 link_libraries(glfw)
 
-# GLAD
-include_directories(${CMAKE_SOURCE_DIR}/ext/glad/include/)
+#GLEW
+include_directories("/opt/homebrew/Cellar/glew/2.2.0_1/include")
+link_directories("/opt/homebrew/Cellar/glew/2.2.0_1/lib")
+link_libraries(glew)
 
 # EIGEN
 include_directories("/opt/homebrew/Cellar/eigen/3.4.0_1/include/eigen3")
+# GLM
+include_directories("/opt/homebrew/Cellar/glm/0.9.9.8/include")
 
+add_subdirectory(src)
 
-AUX_SOURCE_DIRECTORY(. SRC_LIST)
-list(APPEND SRC_LIST ${CMAKE_SOURCE_DIR}/ext/glad/src/glad.c)
-add_executable(gui  ${SRC_LIST} gui.h)
+add_executable(main  main.cpp)
+target_link_libraries(main gui)
 
