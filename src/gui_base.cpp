@@ -1,12 +1,8 @@
-//
-// Created by refantasy on 2022/6/20.
-//
-
 #include "gui_base.h"
 
 int GUIBase::InitOpenGL()
 {
-    /* Initialize the library */
+    /* 初始化 GLFW */
     if (!glfwInit())
         return -1;
 
@@ -18,7 +14,7 @@ int GUIBase::InitOpenGL()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-    /* Create a windowed mode window and its OpenGL context */
+    /* 创建窗口及 OpenGL 上下文 */
     _window_id = glfwCreateWindow(_width, _height, _window_title.c_str(), NULL, NULL);
     if (!_window_id)
     {
@@ -26,14 +22,16 @@ int GUIBase::InitOpenGL()
         return -1;
     }
 
-    /* Make the window's context current */
     glfwMakeContextCurrent(_window_id);
-    /* Enable vsync */
+
+    /* 默认关闭垂直同步 */
     glfwSwapInterval(0);
 
+    /* 窗口缩放回调 */
     glfwSetFramebufferSizeCallback(_window_id,
                                    [](GLFWwindow *window, int width, int height) { glViewport(0, 0, width, height); });
 
+    /* 初始化 GLEW */
     GLenum err = glewInit();
     if (err != GLEW_OK)
     {
@@ -41,6 +39,7 @@ int GUIBase::InitOpenGL()
         exit(EXIT_FAILURE);
     }
 
+    /* 开启深度测试及超采样 */
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
 
@@ -69,13 +68,14 @@ double GUIBase::Fps()
 
 void GUIBase::Show()
 {
-    /* Loop until the user closes the window */
+    /* 窗口循环 */
     while (!glfwWindowShouldClose(_window_id))
     {
-        /* Render here */
+        /* 清除缓存 */
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(_bg_color[0], _bg_color[1], _bg_color[2], _bg_color[3]);
 
+        /* 渲染 */
         BaseRender();
 
         /* something else */

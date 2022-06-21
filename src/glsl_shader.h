@@ -55,7 +55,7 @@ class GLSLShader
         return ID;
     }
 
-    void LoadShader(const char *vertexPath, const char *fragmentPath, const char *geometryPath = nullptr)
+    void LoadShaderFromFile(const char *vertexPath, const char *fragmentPath, const char *geometryPath = nullptr)
     {
         if (ID != 0)
         {
