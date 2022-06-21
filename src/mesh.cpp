@@ -14,6 +14,8 @@ Mesh::~Mesh()
 
 bool Mesh::GenGLBuffers()
 {
+
+
     // create buffers/arrays
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -65,10 +67,6 @@ void Points::Draw(GLuint shader_program)
     glUseProgram(0);
 }
 
-float toRadians(float degrees)
-{
-    return (degrees * 2.0f * 3.14159f) / 360.0f;
-}
 
 Sphere::Sphere(std::vector<Vertex> vertices, std::vector<float> radius, int prec)
 {
@@ -84,9 +82,9 @@ Sphere::Sphere(std::vector<Vertex> vertices, std::vector<float> radius, int prec
     {
         for (int j = 0; j <= prec; j++)
         {
-            float y = (float)cos(toRadians(180.0f - i * 180.0f / prec));
-            float x = -(float)cos(toRadians(j * 360.0f / prec)) * (float)abs(cos(asin(y)));
-            float z = (float)sin(toRadians(j * 360.0f / (float)(prec))) * (float)abs(cos(asin(y)));
+            float y = (float)cos(glm::radians(180.0f - i * 180.0f / prec));
+            float x = -(float)cos(glm::radians(j * 360.0f / prec)) * (float)abs(cos(asin(y)));
+            float z = (float)sin(glm::radians(j * 360.0f / (float)(prec))) * (float)abs(cos(asin(y)));
             st_v[i * (prec + 1) + j] = glm::vec3(x, y, z);
         }
     }

@@ -71,5 +71,10 @@ class Sphere : public Mesh
   public:
     explicit Sphere(std::vector<Vertex> vertices = std::vector<Vertex>{},
                     std::vector<float> radius = std::vector<float>{}, int prec = 48);
+    explicit Sphere(const std::vector<Vertex>& vertices = std::vector<Vertex>{},
+                    float radius = 0.01, int prec = 48)
+    : Sphere(vertices,std::vector<float>(vertices.size(), radius), prec)
+    {
+    }
 };
 #endif // GUI_MESH_H

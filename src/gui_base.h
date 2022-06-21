@@ -43,6 +43,15 @@ class GUIBase
      */
     static void SetVsync(bool vsync = true);
 
+    void SetBackGroundColor(glm::vec3 bg_color)
+    {
+        _bg_color = glm::vec4 (bg_color,1.0);
+    }
+    void SetBackGroundColor(glm::vec4 bg_color)
+    {
+        _bg_color = bg_color;
+    }
+
     /**
      * 进入窗口事件循环
      * 每次循环调用 Render() 函数进行渲染
