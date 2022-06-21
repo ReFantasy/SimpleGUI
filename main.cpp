@@ -56,6 +56,10 @@ std::shared_ptr<Mesh> CreateGround()
     v3.Position = glm::vec3 (-max_value,0.0f,-max_value);
     v4.Position = glm::vec3 (-max_value,0.0f,max_value);
 
+    glm::vec3  normal(0,1,0);
+    v1.Normal = v2.Normal=v3.Normal = v4.Normal = normal;
+
+
 
     v1.Color = glm::vec3 (RandomNumber<float>(0,1),RandomNumber<float>(0,1),RandomNumber<float>(0,1));
     v2.Color = glm::vec3 (RandomNumber<float>(0,1),RandomNumber<float>(0,1),RandomNumber<float>(0,1));

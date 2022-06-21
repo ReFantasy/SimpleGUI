@@ -118,6 +118,7 @@ Sphere::Sphere(std::vector<Vertex> vertices, std::vector<float> radius, int prec
         for (int j = 0; j < st_v.size(); j++)
         {
             Vertex v;
+            v.Normal = st_v[j];
             v.Position = glm::vec3(st_v[j].x * scale, st_v[j].y * scale, st_v[j].z * scale) + tmp[i].Position;
             v.Color = tmp[i].Color;
             _vertices.push_back(v);
