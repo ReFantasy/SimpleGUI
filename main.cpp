@@ -81,7 +81,7 @@ std::shared_ptr<Sphere> CreateSphere()
 
 
     std::vector<Vertex> s_v{s1,s2,s3};
-    auto s = std::make_shared<Sphere>(s_v, 0.5,16);
+    auto s = std::make_shared<Sphere>(s_v, 3,32);
     s->GenGLBuffers();
 
     return s;

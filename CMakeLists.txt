@@ -27,8 +27,12 @@ include_directories("/opt/homebrew/Cellar/eigen/3.4.0_1/include/eigen3")
 # GLM
 include_directories("/opt/homebrew/Cellar/glm/0.9.9.8/include")
 
+# ASSIMP
+add_subdirectory(ext)
+
 add_subdirectory(src)
 
 add_executable(main main.cpp)
 target_link_libraries(main gui)
+
 
