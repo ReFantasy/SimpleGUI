@@ -1,6 +1,10 @@
-//
-// Created by refantasy on 2022/6/20.
-//
+/*
+ * Created by refantasy on 2022/6/20.
+ *
+ * 图形界面类，处理相机及着色器
+ * 通过继承该类并重载 void Render() 函数，实现自定义对象的渲染
+ *
+ */
 
 #ifndef GUI_GUI_H
 #define GUI_GUI_H
