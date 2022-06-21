@@ -53,7 +53,7 @@ class GUIBase
     /**
      * 纯虚函数，重载执行渲染任务
      */
-    virtual void Render() = 0;
+    virtual void BaseRender() = 0;
 
   protected:
     GLFWwindow *_window_id = nullptr;

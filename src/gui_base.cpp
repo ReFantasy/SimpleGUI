@@ -76,7 +76,7 @@ void GUIBase::Show()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(_bg_color[0], _bg_color[1], _bg_color[2], _bg_color[3]);
 
-        Render();
+        BaseRender();
 
         /* something else */
         Fps();

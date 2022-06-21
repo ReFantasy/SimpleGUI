@@ -24,13 +24,14 @@ class GLSLShader
         layout(location = 0) in vec3 _position;
 		layout(location = 1) in vec3 _normal;
 		layout(location = 2) in vec3 _color;
-        out vec3 FragPos;
-		out vec3 Normal;
+
         out vec3 Color;
+
+        uniform mat4 MVP;
         void main()
         {
-           gl_Position = vec4(_position.x, _position.y, _position.z, 1.0);
-		   Normal = _normal;
+           gl_Position = MVP*vec4(_position.x, _position.y, _position.z, 1.0);
+
            Color = _color;
         }
 	    )";
@@ -38,8 +39,7 @@ class GLSLShader
         std::string fs = R"(
 		#version 410 core
         in vec3 Color;
-		in vec3 Normal;
-		in vec3 FragPos;
+
         out vec4 FragColor;
         void main()
         {

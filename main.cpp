@@ -38,16 +38,16 @@ class GUI3D : public GUI
 
     void Render() override
     {
-        // mesh.Draw(this->_shader.GetShaderID());
+        mesh.Draw(this->_shader.GetShaderID());
         //  pts.Draw(this->_shader.GetShaderID());
-        sp.Draw(this->_shader.GetShaderID());
+        // sp.Draw(this->_shader.GetShaderID());
     }
 };
 
 int main(int argc, char *argv[])
 {
 
-    GUI3D gui(800, 800);
+    GUI3D gui(800, 600);
 
     Vertex v1;
     Vertex v2;
@@ -93,8 +93,8 @@ int main(int argc, char *argv[])
     sp = Sphere(vertices, Rs, 12);
     sp.GenGLBuffers();
 
-    // gui.SetVsync();
-
+    gui.SetVsync();
+    gui.GetCamera().UpdateCamPos(glm::vec3{0, 0, 6});
     gui.Show();
 
     return 0;
