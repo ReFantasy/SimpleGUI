@@ -1,5 +1,5 @@
-#include "src/gui.h"
-#include "src/mesh.h"
+#include "src/gui/gui.h"
+#include "src/gui/mesh.h"
 #include <memory>
 #include <random>
 #include <numeric>
