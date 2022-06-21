@@ -13,6 +13,15 @@
 #include "glsl_shader.h"
 #include "gui_base.h"
 #include "mesh.h"
+#include "glm/glm.hpp"
+
+struct Light
+{
+    glm::vec3 position {1.2,1.0,2.0};
+    glm::vec3 ambient  { 0.2f, 0.2f, 0.2f};
+    glm::vec3 diffuse  {0.5f, 0.5f, 0.5f};
+    glm::vec3 specular {1.0f, 1.0f, 1.0f};
+};
 
 class GUI : public GUIBase
 {
@@ -21,11 +30,21 @@ class GUI : public GUIBase
 
     void BaseRender() override;
 
+
+
     virtual void Render() = 0;
 
     Camera &GetCamera()
     {
         return cam;
+    }
+    GLSLShader &GetShader()
+    {
+        return _shader;
+    }
+    Light& GetLight()
+    {
+        return _light;
     }
 
   protected:
@@ -34,6 +53,9 @@ class GUI : public GUIBase
 
     // 相机
     Camera cam;
+
+    // 光源位置
+    Light _light;//;
 };
 
 #endif // GUI_GUI_H

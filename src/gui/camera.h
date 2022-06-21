@@ -23,7 +23,9 @@ public:
 
     Camera& UpdateCamUp(glm::vec3 cam_up);
 
-public:
+    [[nodiscard]] glm::vec3 GetCameraPosition()const{return cameraPos;}
+
+        public:
     glm::mat4 GetViewMatrix();
 
     glm::mat4 GetPerspectiveMatrix(float w_div_h);

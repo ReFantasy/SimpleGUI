@@ -20,6 +20,9 @@ struct Vertex
 
     // color
     glm::vec3 Color = glm::vec3{1, 1, 1};
+
+    // texture coord
+    glm::vec2 Texcoord = glm::vec2{0, 0};
 };
 
 class Mesh
@@ -32,6 +35,9 @@ class Mesh
     virtual ~Mesh();
 
     bool GenGLBuffers();
+
+    void LoadDiffuseMap(std::string image_path);
+    void LoadSpecularMap(std::string image_path);
 
     /**
      * @brief
@@ -48,9 +54,14 @@ class Mesh
     // protected:
     std::vector<Vertex> _vertices;
     std::vector<unsigned int> _indices;
-
+    unsigned int diffuseMap;
+    unsigned int specularMap;
   protected:
     GLuint VAO = 0, VBO = 0, EBO = 0;
+
+
+  private:
+    unsigned int LoadTexture(std::string image_path);
 };
 
 class Points : public Mesh

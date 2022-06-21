@@ -25,12 +25,17 @@ class GLSLShader
 		layout(location = 1) in vec3 _normal;
 		layout(location = 2) in vec3 _color;
 
+        //uniform mat4 projection;
+        //uniform mat4 view;
+        //uniform mat4 model;
+        //out vec3 FragPos;
+		//out vec3 Normal;
         out vec3 Color;
 
         uniform mat4 MVP;
         void main()
         {
-           gl_Position = MVP*vec4(_position.x, _position.y, _position.z, 1.0);
+           gl_Position = MVP*vec4(_position, 1.0);
 
            Color = _color;
         }
@@ -104,6 +109,12 @@ class GLSLShader
             std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
         }
         LoadShaderFromString(vertexCode, fragmentCode, geometryCode);
+
+        activate();
+        setInt("material.diffuse", 0);
+        setInt("material.specular", 1);
+        setFloat("material.shininess", 64.0f);
+        deactivate();
     }
 
     void LoadShaderFromString(std::string vertexCode, std::string fragmentCode, std::string geometryCode)

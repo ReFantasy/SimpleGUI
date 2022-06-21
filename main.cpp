@@ -16,6 +16,8 @@ std::shared_ptr<Mesh> ground;
 std::shared_ptr<Mesh> CreateGround();
 std::shared_ptr<Sphere> sphere;
 std::shared_ptr<Sphere> CreateSphere();
+std::shared_ptr<Mesh> cube;
+std::shared_ptr<Mesh> CreateCube();
 
 class GUI3D : public GUI
 {
@@ -24,9 +26,13 @@ class GUI3D : public GUI
 
     void Render() override
     {
+        _shader.activate();
+        _shader.deactivate();
 
         ground->Draw(this->_shader.GetShaderID());
-        sphere->Draw(this->_shader.GetShaderID());
+
+
+        cube->Draw(this->_shader.GetShaderID());
 
     }
 };
@@ -37,10 +43,17 @@ int main(int argc, char *argv[])
     gui.SetBackGroundColor({0,0,0,0});
     GUI3D::SetVsync();
 
-    ground = CreateGround();
-    sphere = CreateSphere();
+    gui.GetCamera().UpdateCamPos(glm::vec3{1.3,1.6,2.0}).UpdateCamTar(glm::vec3(0,0.5,0));
+    gui.GetShader().LoadShaderFromFile("/Users/refantasy/Desktop/SimpleGUI/src/gui/basic_vs.glsl",
+                                       "/Users/refantasy/Desktop/SimpleGUI/src/gui/basic_fs.glsl");
 
-    gui.GetCamera().UpdateCamPos(glm::vec3{0, 20, 20});
+
+
+    cube = CreateCube();
+    cube->LoadDiffuseMap("/Users/refantasy/Desktop/SimpleGUI/container2.png");
+    cube->LoadSpecularMap("/Users/refantasy/Desktop/SimpleGUI/container2_specular.png");
+
+    ground = CreateGround();
 
     gui.Show();
 
@@ -85,8 +98,72 @@ std::shared_ptr<Sphere> CreateSphere()
 
 
     std::vector<Vertex> s_v{s1,s2,s3};
-    auto s = std::make_shared<Sphere>(s_v, 3,32);
+    auto s = std::make_shared<Sphere>(s_v, 3,48);
     s->GenGLBuffers();
 
     return s;
+}
+std::shared_ptr<Mesh> CreateCube()
+{
+    float vertices[] = {
+        // positions          // normals           // texture coords
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
+        0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  0.0f,
+        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
+
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
+        0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  0.0f,
+        0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+        0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
+
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+
+        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+        0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+        0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
+        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
+
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
+        0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  1.0f,
+        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
+    };
+
+    std::vector<Vertex> VV;
+    std::vector<unsigned int> indices;
+    for(int i = 0;i<36;i++)
+    {
+        Vertex v;
+        int base = 8*i;
+        v.Position = glm::vec3 (vertices[base+0],vertices[base+1],vertices[base+2]) + glm::vec3(0,0.6,0);
+        v.Normal = glm::vec3 (vertices[base+3],vertices[base+4],vertices[base+5]);
+        v.Texcoord = glm::vec2(vertices[base+6],vertices[base+7]);
+        VV.push_back(v);
+        indices.push_back(i);
+    }
+
+    auto g = std::make_shared<Mesh>(VV, indices);
+    g->GenGLBuffers();
+    return g;
 }
