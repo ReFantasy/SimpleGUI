@@ -65,47 +65,21 @@ void Points::Draw(GLuint shader_program)
     glUseProgram(0);
 }
 
-SphereGen::SphereGen()
-{
-    init(24);
-}
-
-SphereGen::SphereGen(int prec)
-{
-    init(prec);
-}
-
-float SphereGen::toRadians(float degrees)
+float toRadians(float degrees)
 {
     return (degrees * 2.0f * 3.14159f) / 360.0f;
 }
 
-void SphereGen::init(int prec)
+Sphere::Sphere(std::vector<Vertex> vertices, std::vector<float> radius, int prec)
 {
-    numVertices = (prec + 1) * (prec + 1);
-    numIndices = prec * prec * 6;
-    for (int i = 0; i < numVertices; i++)
-    {
-        vertices.push_back(glm::vec3());
-    }
-    for (int i = 0; i < numVertices; i++)
-    {
-        texCoords.push_back(glm::vec2());
-    }
-    for (int i = 0; i < numVertices; i++)
-    {
-        normals.push_back(glm::vec3());
-    }
-    for (int i = 0; i < numVertices; i++)
-    {
-        tangents.push_back(glm::vec3());
-    }
-    for (int i = 0; i < numIndices; i++)
-    {
-        indices.push_back(0);
-    }
+    std::vector<Vertex> tmp = vertices;
+    _vertices.clear();
 
     // calculate triangle vertices
+    int numVertices = (prec + 1) * (prec + 1);
+    int numIndices = prec * prec * 6;
+    std::vector<glm::vec3> st_v(numVertices, glm::vec3{});
+    std::vector<int> st_i(numIndices, 0);
     for (int i = 0; i <= prec; i++)
     {
         for (int j = 0; j <= prec; j++)
@@ -113,19 +87,7 @@ void SphereGen::init(int prec)
             float y = (float)cos(toRadians(180.0f - i * 180.0f / prec));
             float x = -(float)cos(toRadians(j * 360.0f / prec)) * (float)abs(cos(asin(y)));
             float z = (float)sin(toRadians(j * 360.0f / (float)(prec))) * (float)abs(cos(asin(y)));
-            vertices[i * (prec + 1) + j] = glm::vec3(x, y, z);
-            texCoords[i * (prec + 1) + j] = glm::vec2(((float)j / prec), ((float)i / prec));
-            normals[i * (prec + 1) + j] = glm::vec3(x, y, z);
-
-            // calculate tangent vector
-            if (((x == 0) && (y == 1) && (z == 0)) || ((x == 0) && (y == -1) && (z == 0)))
-            {
-                tangents[i * (prec + 1) + j] = glm::vec3(0.0f, 0.0f, -1.0f);
-            }
-            else
-            {
-                tangents[i * (prec + 1) + j] = glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(x, y, z));
-            }
+            st_v[i * (prec + 1) + j] = glm::vec3(x, y, z);
         }
     }
     // calculate triangle indices
@@ -133,53 +95,15 @@ void SphereGen::init(int prec)
     {
         for (int j = 0; j < prec; j++)
         {
-            indices[6 * (i * prec + j) + 0] = i * (prec + 1) + j;
-            indices[6 * (i * prec + j) + 1] = i * (prec + 1) + j + 1;
-            indices[6 * (i * prec + j) + 2] = (i + 1) * (prec + 1) + j;
-            indices[6 * (i * prec + j) + 3] = i * (prec + 1) + j + 1;
-            indices[6 * (i * prec + j) + 4] = (i + 1) * (prec + 1) + j + 1;
-            indices[6 * (i * prec + j) + 5] = (i + 1) * (prec + 1) + j;
+            st_i[6 * (i * prec + j) + 0] = i * (prec + 1) + j;
+            st_i[6 * (i * prec + j) + 1] = i * (prec + 1) + j + 1;
+            st_i[6 * (i * prec + j) + 2] = (i + 1) * (prec + 1) + j;
+            st_i[6 * (i * prec + j) + 3] = i * (prec + 1) + j + 1;
+            st_i[6 * (i * prec + j) + 4] = (i + 1) * (prec + 1) + j + 1;
+            st_i[6 * (i * prec + j) + 5] = (i + 1) * (prec + 1) + j;
         }
     }
-}
 
-int SphereGen::getNumVertices()
-{
-    return numVertices;
-}
-int SphereGen::getNumIndices()
-{
-    return numIndices;
-}
-std::vector<int> SphereGen::getIndices()
-{
-    return indices;
-}
-std::vector<glm::vec3> SphereGen::getVertices()
-{
-    return vertices;
-}
-std::vector<glm::vec2> SphereGen::getTexCoords()
-{
-    return texCoords;
-}
-std::vector<glm::vec3> SphereGen::getNormals()
-{
-    return normals;
-}
-std::vector<glm::vec3> SphereGen::getTangents()
-{
-    return tangents;
-}
-
-Sphere::Sphere(std::vector<Vertex> vertices, std::vector<float> radius, int prec) //: Mesh(std::move(vertices), {})
-{
-    std::vector<Vertex> tmp = vertices;
-    _vertices.clear();
-
-    SphereGen sg{prec};
-    auto st_v = sg.getVertices();
-    auto st_i = sg.getIndices();
     // 每个顶点生成一个球体
     for (int i = 0; i < tmp.size(); i++)
     {

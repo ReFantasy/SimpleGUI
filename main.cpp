@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
 
     std::vector<float> Rs;
     vertices.clear();
-    for (int i = 0; i < 65535; i++)
+    for (int i = 0; i < 655; i++)
     {
         Rs.push_back(0.01);
         Vertex v;
@@ -90,10 +90,10 @@ int main(int argc, char *argv[])
         vertices.push_back(v);
     }
 
-    sp = Sphere(vertices, Rs, 6);
+    sp = Sphere(vertices, Rs, 12);
     sp.GenGLBuffers();
 
-    gui.SetVsync();
+    // gui.SetVsync();
 
     gui.Show();
 
