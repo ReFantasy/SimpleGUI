@@ -7,6 +7,7 @@
 
 #include "GL/glew.h"
 #include "glm/glm.hpp"
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -56,9 +57,9 @@ class Mesh
     std::vector<unsigned int> _indices;
     unsigned int diffuseMap;
     unsigned int specularMap;
+
   protected:
     GLuint VAO = 0, VBO = 0, EBO = 0;
-
 
   private:
     unsigned int LoadTexture(std::string image_path);
@@ -82,9 +83,8 @@ class Sphere : public Mesh
   public:
     explicit Sphere(std::vector<Vertex> vertices = std::vector<Vertex>{},
                     std::vector<float> radius = std::vector<float>{}, int prec = 48);
-    explicit Sphere(const std::vector<Vertex>& vertices = std::vector<Vertex>{},
-                    float radius = 0.01, int prec = 48)
-    : Sphere(vertices,std::vector<float>(vertices.size(), radius), prec)
+    explicit Sphere(const std::vector<Vertex> &vertices = std::vector<Vertex>{}, float radius = 0.01, int prec = 48)
+        : Sphere(vertices, std::vector<float>(vertices.size(), radius), prec)
     {
     }
 };

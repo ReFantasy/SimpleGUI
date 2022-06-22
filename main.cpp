@@ -20,7 +20,6 @@ std::shared_ptr<Sphere> CreateSphere();
 std::shared_ptr<Mesh> cube;
 std::shared_ptr<Mesh> CreateCube();
 
-
 std::shared_ptr<Model> model;
 
 class GUI3D : public GUI
@@ -37,7 +36,7 @@ class GUI3D : public GUI
         cube->Draw(this->_shader.GetShaderID());
         sphere->Draw(this->_shader.GetShaderID());
 
-        //model->Draw(this->_shader.GetShaderID());
+        // model->Draw(this->_shader.GetShaderID());
     }
 };
 
@@ -50,20 +49,20 @@ int main(int argc, char *argv[])
     GUI3D::SetVsync();
 
     gui.GetCamera().UpdateCamPos(glm::vec3{3, 3, 3.0}).UpdateCamTar(glm::vec3(0, 0.5, 0));
-    gui.GetShader().LoadShaderFromFile(std::string(source_dir.string()+"/src/gui/basic_vs.glsl").c_str(),
-                                       std::string(source_dir.string()+"/src/gui/basic_fs.glsl").c_str());
-    gui.GetLight().position = glm::vec3 (0,2,2);
+    gui.GetShader().LoadShaderFromFile(std::string(source_dir.string() + "/src/gui/basic_vs.glsl").c_str(),
+                                       std::string(source_dir.string() + "/src/gui/basic_fs.glsl").c_str());
+    gui.GetLight().position = glm::vec3(0, 2, 2);
 
     cube = CreateCube();
-    cube->LoadDiffuseMap(std::string(source_dir.string()+"/resource/container2.png").c_str());
-    cube->LoadSpecularMap(std::string(source_dir.string()+"/resource/container2_specular.png").c_str());
+    cube->LoadDiffuseMap(std::string(source_dir.string() + "/resource/container2.png").c_str());
+    cube->LoadSpecularMap(std::string(source_dir.string() + "/resource/container2_specular.png").c_str());
 
     sphere = CreateSphere();
 
     ground = CreateGround();
 
-    model = std::make_shared<Model>(std::string(source_dir.string()+"/resource/NasaShuttle/shuttle.obj"));
-    model->meshes[0].LoadDiffuseMap(std::string(source_dir.string()+"/resource/NasaShuttle/spstob_1.jpg"));
+    model = std::make_shared<Model>(std::string(source_dir.string() + "/resource/NasaShuttle/shuttle.obj"));
+    model->meshes[0].LoadDiffuseMap(std::string(source_dir.string() + "/resource/NasaShuttle/spstob_1.jpg"));
 
     gui.Show();
 

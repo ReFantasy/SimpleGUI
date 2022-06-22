@@ -55,7 +55,6 @@ unsigned int Mesh::LoadTexture(std::string image_path)
 bool Mesh::GenGLBuffers()
 {
 
-
     // create buffers/arrays
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -121,7 +120,6 @@ void Points::Draw(GLuint shader_program)
     glBindVertexArray(0);
     glUseProgram(0);
 }
-
 
 Sphere::Sphere(std::vector<Vertex> vertices, std::vector<float> radius, int prec)
 {
