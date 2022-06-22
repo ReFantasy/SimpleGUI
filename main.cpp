@@ -21,6 +21,7 @@ std::shared_ptr<Sphere> CreateSphere();
 std::shared_ptr<Mesh> cube;
 std::shared_ptr<Mesh> CreateCube();
 
+
 std::shared_ptr<Model> model;
 
 class GUI3D : public GUI
@@ -35,6 +36,7 @@ class GUI3D : public GUI
 
         ground->Draw(this->_shader.GetShaderID());
         cube->Draw(this->_shader.GetShaderID());
+        sphere->Draw(this->_shader.GetShaderID());
 
         //model->Draw(this->_shader.GetShaderID());
     }
@@ -48,13 +50,16 @@ int main(int argc, char *argv[])
     gui.SetBackGroundColor({0, 0, 0, 0});
     GUI3D::SetVsync();
 
-    gui.GetCamera().UpdateCamPos(glm::vec3{0.5, 1.6, 2.0}).UpdateCamTar(glm::vec3(0, 0.5, 0));
+    gui.GetCamera().UpdateCamPos(glm::vec3{3, 3, 3.0}).UpdateCamTar(glm::vec3(0, 0.5, 0));
     gui.GetShader().LoadShaderFromFile(std::string(source_dir.string()+"/src/gui/basic_vs.glsl").c_str(),
                                        std::string(source_dir.string()+"/src/gui/basic_fs.glsl").c_str());
+    gui.GetLight().position = glm::vec3 (0,2,2);
 
     cube = CreateCube();
     cube->LoadDiffuseMap(std::string(source_dir.string()+"/resource/container2.png").c_str());
     cube->LoadSpecularMap(std::string(source_dir.string()+"/resource/container2_specular.png").c_str());
+
+    sphere = CreateSphere();
 
     ground = CreateGround();
 
@@ -93,15 +98,15 @@ std::shared_ptr<Mesh> CreateGround()
 std::shared_ptr<Sphere> CreateSphere()
 {
     Vertex s1, s2, s3;
-    s1.Position = glm::vec3(RandomNumber<float>(-8, 8), RandomNumber<float>(1, 5), RandomNumber<float>(-8, 8));
+    s1.Position = glm::vec3(RandomNumber<float>(-2, 2), RandomNumber<float>(0.3, 1), RandomNumber<float>(-2, 2));
     s1.Color = glm::vec3(1, 0, 0);
-    s2.Position = glm::vec3(RandomNumber<float>(-8, 8), RandomNumber<float>(1, 5), RandomNumber<float>(-8, 8));
+    s2.Position = glm::vec3(RandomNumber<float>(-2, 2), RandomNumber<float>(0.3, 1), RandomNumber<float>(-2, 1));
     s2.Color = glm::vec3(0, 1, 0);
-    s3.Position = glm::vec3(RandomNumber<float>(-8, 8), RandomNumber<float>(1, 5), RandomNumber<float>(-8, 8));
+    s3.Position = glm::vec3(RandomNumber<float>(-2, 2), RandomNumber<float>(0.3, 1), RandomNumber<float>(-2, 2));
     s3.Color = glm::vec3(0, 0, 1);
 
     std::vector<Vertex> s_v{s1, s2, s3};
-    auto s = std::make_shared<Sphere>(s_v, 3, 48);
+    auto s = std::make_shared<Sphere>(s_v, 0.3, 32);
     s->GenGLBuffers();
 
     return s;

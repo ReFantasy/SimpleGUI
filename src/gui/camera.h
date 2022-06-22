@@ -46,7 +46,7 @@ private:
 public:
     float zNear = 0.001;
     float zFar = FLT_MAX / 2.0f;
-    float fov = 60;
+    float fov = 45;
 };
 
 #endif

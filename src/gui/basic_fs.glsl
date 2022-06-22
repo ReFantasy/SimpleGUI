@@ -27,20 +27,27 @@ uniform Light light;
 
 vec3 Phong()
 {
+    vec3 sample_diffuse = texture(material.diffuse, TexCoords).rgb;
+    if(dot(sample_diffuse,sample_diffuse)<0.0001)
+        sample_diffuse = Color;
+    vec3 sample_specular = texture(material.specular, TexCoords).rgb;
+    if(dot(sample_specular,sample_specular)<0.0001)
+        sample_specular = vec3(0.1,0.1,0.1);
+
     // ambient
-    vec3 ambient = light.ambient * texture(material.diffuse, TexCoords).rgb;
+    vec3 ambient = light.ambient * sample_diffuse;
 
     // diffuse
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(light.position - FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
-    vec3 diffuse = light.diffuse * diff * texture(material.diffuse, TexCoords).rgb;
+    vec3 diffuse = light.diffuse * diff * sample_diffuse;
 
     // specular
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-    vec3 specular = light.specular * spec * texture(material.specular, TexCoords).rgb;
+    vec3 specular = light.specular * spec * sample_specular;
 
     vec3 result = ambient + diffuse + specular;
     return result;
@@ -48,15 +55,5 @@ vec3 Phong()
 
 void main()
 {
-    vec3 phong = Phong();
-    float pcolor = dot(phong,phong);
-    // 如果没有加载纹理图，采样值会是个极小的数，使用顶点颜色进行着色
-    if(pcolor < 0.00001)
-    {
-        FragColor = vec4(Color,1);
-    }
-    else
-    {
-        FragColor = vec4(Phong(), 1.0f);//vec4(Color,1);//
-    }
+    FragColor = vec4(Phong(), 1.0f);
 }
