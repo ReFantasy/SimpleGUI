@@ -3,7 +3,6 @@
 #include "src/gui/mesh.h"
 #include <filesystem>
 #include <memory>
-#include <numeric>
 #include <random>
 template <typename T, typename Distribution = std::uniform_real_distribution<T>>
 T RandomNumber(const T &lo = 0, const T &hi = 1)
@@ -106,7 +105,7 @@ std::shared_ptr<Sphere> CreateSphere()
     s3.Color = glm::vec3(0, 0, 1);
 
     std::vector<Vertex> s_v{s1, s2, s3};
-    auto s = std::make_shared<Sphere>(s_v, 0.3, 32);
+    auto s = std::make_shared<Sphere>(s_v, 0.3, 48);
     s->GenGLBuffers();
 
     return s;

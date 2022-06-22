@@ -7,33 +7,37 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <cfloat>
 #include "glm/glm.hpp"
+#include <cfloat>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 
-class Camera {
-public:
+class Camera
+{
+  public:
     explicit Camera(glm::vec3 cam_pos = glm::vec3(0, 0, 1), glm::vec3 cam_tar = glm::vec3(0, 0, 0),
                     glm::vec3 up = glm::vec3(0, 1, 0));
 
-    Camera& UpdateCamPos(glm::vec3 cam_pos);
+    Camera &UpdateCamPos(glm::vec3 cam_pos);
 
-    Camera& UpdateCamTar(glm::vec3 cam_tar);
+    Camera &UpdateCamTar(glm::vec3 cam_tar);
 
-    Camera& UpdateCamUp(glm::vec3 cam_up);
+    Camera &UpdateCamUp(glm::vec3 cam_up);
 
-    [[nodiscard]] glm::vec3 GetCameraPosition()const{return cameraPos;}
+    glm::vec3 GetCameraPosition() const
+    {
+        return cameraPos;
+    }
 
-        public:
+  public:
     glm::mat4 GetViewMatrix();
 
     glm::mat4 GetPerspectiveMatrix(float w_div_h);
 
-private:
+  private:
     void Update() noexcept;
 
-private:
+  private:
     // 相机位置
     glm::vec3 cameraPos;
     // 相机看向的位置
@@ -43,7 +47,7 @@ private:
     // 相机向上方向
     glm::vec3 cameraUp{};
 
-public:
+  public:
     float zNear = 0.001;
     float zFar = FLT_MAX / 2.0f;
     float fov = 45;

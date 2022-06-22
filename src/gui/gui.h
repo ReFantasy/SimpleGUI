@@ -10,17 +10,17 @@
 #define GUI_GUI_H
 
 #include "camera.h"
+#include "glm/glm.hpp"
 #include "glsl_shader.h"
 #include "gui_base.h"
 #include "mesh.h"
-#include "glm/glm.hpp"
 
 struct Light
 {
-    glm::vec3 position {1.2,1.0,2.0};
-    glm::vec3 ambient  { 0.2f, 0.2f, 0.2f};
-    glm::vec3 diffuse  {0.5f, 0.5f, 0.5f};
-    glm::vec3 specular {1.0f, 1.0f, 1.0f};
+    glm::vec3 position{1.2, 1.0, 2.0};
+    glm::vec3 ambient{0.2f, 0.2f, 0.2f};
+    glm::vec3 diffuse{0.5f, 0.5f, 0.5f};
+    glm::vec3 specular{1.0f, 1.0f, 1.0f};
 };
 
 class GUI : public GUIBase
@@ -29,8 +29,6 @@ class GUI : public GUIBase
     using GUIBase::GUIBase;
 
     void BaseRender() override;
-
-
 
     virtual void Render() = 0;
 
@@ -42,7 +40,7 @@ class GUI : public GUIBase
     {
         return _shader;
     }
-    Light& GetLight()
+    Light &GetLight()
     {
         return _light;
     }
@@ -55,7 +53,7 @@ class GUI : public GUIBase
     Camera cam;
 
     // 光源位置
-    Light _light;//;
+    Light _light; //;
 };
 
 #endif // GUI_GUI_H

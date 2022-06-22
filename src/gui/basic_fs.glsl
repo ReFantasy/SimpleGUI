@@ -1,13 +1,15 @@
 #version 410 core
 out vec4 FragColor;
 
-struct Material {
-    sampler2D diffuse ;
+struct Material
+{
+    sampler2D diffuse;
     sampler2D specular;
     float shininess;
 };
 
-struct Light {
+struct Light
+{
     vec3 position;
     vec3 ambient;
     vec3 diffuse;
@@ -28,11 +30,11 @@ uniform Light light;
 vec3 Phong()
 {
     vec3 sample_diffuse = texture(material.diffuse, TexCoords).rgb;
-    if(dot(sample_diffuse,sample_diffuse)<0.0001)
-        sample_diffuse = Color;
+    if (dot(sample_diffuse, sample_diffuse)<0.0001)
+    sample_diffuse = Color;
     vec3 sample_specular = texture(material.specular, TexCoords).rgb;
-    if(dot(sample_specular,sample_specular)<0.0001)
-        sample_specular = vec3(0.1,0.1,0.1);
+    if (dot(sample_specular, sample_specular)<0.0001)
+    sample_specular = vec3(0.1, 0.1, 0.1);
 
     // ambient
     vec3 ambient = light.ambient * sample_diffuse;
