@@ -25,30 +25,76 @@ class GLSLShader
 		layout(location = 1) in vec3 _normal;
 		layout(location = 2) in vec3 _color;
 
-        //uniform mat4 projection;
-        //uniform mat4 view;
-        //uniform mat4 model;
-        //out vec3 FragPos;
-		//out vec3 Normal;
+        out vec3 FragPos;
+        out vec3 Normal;
         out vec3 Color;
 
-        uniform mat4 MVP;
+        uniform mat4 projection;
+        uniform mat4 view;
+        uniform mat4 model;
+
         void main()
         {
-           gl_Position = MVP*vec4(_position, 1.0);
+            FragPos = vec3(model*vec4(_position, 1.0f));
+            Normal = mat3(transpose(inverse(model))) * _normal;
+            gl_Position = projection * view *vec4(FragPos, 1.0);
 
-           Color = _color;
+            Color = _color;
         }
 	    )";
 
         std::string fs = R"(
 		#version 410 core
+        out vec4 FragColor;
+
+        // struct Material
+        // {
+        //     sampler2D diffuse;
+        //     sampler2D specular;
+        //     float shininess;
+        // };
+
+        struct Light
+        {
+            vec3 position;
+            vec3 ambient;
+            vec3 diffuse;
+            vec3 specular;
+        };
+
+        in vec3 FragPos;
+        in vec3 Normal;
         in vec3 Color;
 
-        out vec4 FragColor;
+        uniform vec3 viewPos;
+        //uniform Material material;
+        uniform Light light;
+
+       
         void main()
         {
-           FragColor = vec4(Color, 1.0f);
+            vec3 material_ambient = Color;
+            vec3 material_diffuse = Color;
+            vec3 material_specular = vec3(0.2, 0.2, 0.2);
+            float material_shininess = 64;
+
+            // ambient
+            vec3 ambient = light.ambient * material_diffuse;
+            
+            // diffuse 
+            vec3 norm = normalize(Normal);
+            vec3 lightDir = normalize(light.position - FragPos);
+            float diff = max(dot(norm, lightDir), 0.0);
+            vec3 diffuse = light.diffuse * (diff * material_diffuse);
+            
+            // specular
+            vec3 viewDir = normalize(viewPos - FragPos);
+            vec3 reflectDir = reflect(-lightDir, norm);  
+            float spec = pow(max(dot(viewDir, reflectDir), 0.0), material_shininess);
+            vec3 specular = light.specular * (spec * material_specular);  
+                
+            vec3 result = ambient + diffuse + specular;
+            FragColor = vec4(result, 1.0);
         }
         )";
 
