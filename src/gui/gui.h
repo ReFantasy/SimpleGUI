@@ -18,7 +18,7 @@
 struct Light
 {
     glm::vec3 position{1.2, 1.0, 2.0};
-    glm::vec3 ambient{0.2f, 0.2f, 0.2f};
+    glm::vec3 ambient{0.4f, 0.4f, 0.4f};
     glm::vec3 diffuse{0.5f, 0.5f, 0.5f};
     glm::vec3 specular{1.0f, 1.0f, 1.0f};
 };

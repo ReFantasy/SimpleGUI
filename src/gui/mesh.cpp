@@ -101,6 +101,7 @@ void Mesh::Draw(GLuint shader_program)
 
     glBindVertexArray(0);
     glUseProgram(0);
+
 }
 void Mesh::LoadDiffuseMap(std::string image_path)
 {
