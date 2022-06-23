@@ -44,7 +44,7 @@ class GUI3D : public GUI
         new_light.ambient = ambientColor;
         new_light.diffuse = diffuseColor;
         new_light.specular = glm::vec3(1,1,1);
-        SetLight(new_light);
+        //SetLight(new_light);
 
 
         /**
