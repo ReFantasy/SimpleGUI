@@ -9,19 +9,19 @@ Camera::Camera(glm::vec3 cam_pos, glm::vec3 cam_tar, glm::vec3 up) : cameraPos(c
     in_up = up;
     Update();
 }
-Camera& Camera::UpdateCamPos(glm::vec3 cam_pos)
+Camera &Camera::UpdateCamPos(glm::vec3 cam_pos)
 {
     cameraPos = cam_pos;
     Update();
     return *this;
 }
-Camera& Camera::UpdateCamTar(glm::vec3 cam_tar)
+Camera &Camera::UpdateCamTar(glm::vec3 cam_tar)
 {
     cameraTarget = cam_tar;
     Update();
     return *this;
 }
-Camera& Camera::UpdateCamUp(glm::vec3 cam_up)
+Camera &Camera::UpdateCamUp(glm::vec3 cam_up)
 {
     in_up = cam_up;
     Update();

@@ -47,13 +47,12 @@ class GLSLShader
 		#version 410 core
         out vec4 FragColor;
 
-        // struct Material
-        // {
-        //     sampler2D diffuse;
-        //     sampler2D specular;
-        //     float shininess;
-        // };
-
+        struct Material {
+            vec3 ambient;
+            vec3 diffuse;
+            vec3 specular;    
+            float shininess;
+        }; 
         struct Light
         {
             vec3 position;
@@ -67,31 +66,38 @@ class GLSLShader
         in vec3 Color;
 
         uniform vec3 viewPos;
-        //uniform Material material;
+        uniform Material material;
         uniform Light light;
+        uniform bool use_vertex_color;
 
-       
+        
+
         void main()
         {
-            vec3 material_ambient = Color;
-            vec3 material_diffuse = Color;
-            vec3 material_specular = vec3(0.2, 0.2, 0.2);
-            float material_shininess = 64;
+            vec3 ma = material.ambient;
+            vec3 md = material.diffuse;
 
+            # 使用顶点颜色渲染
+            if(use_vertex_color)
+            {
+                ma = Color;
+                md = Color;
+            }
+            
             // ambient
-            vec3 ambient = light.ambient * material_diffuse;
+            vec3 ambient = light.ambient * ma;
             
             // diffuse 
             vec3 norm = normalize(Normal);
             vec3 lightDir = normalize(light.position - FragPos);
             float diff = max(dot(norm, lightDir), 0.0);
-            vec3 diffuse = light.diffuse * (diff * material_diffuse);
+            vec3 diffuse = light.diffuse * (diff * md);
             
             // specular
             vec3 viewDir = normalize(viewPos - FragPos);
             vec3 reflectDir = reflect(-lightDir, norm);  
-            float spec = pow(max(dot(viewDir, reflectDir), 0.0), material_shininess);
-            vec3 specular = light.specular * (spec * material_specular);  
+            float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+            vec3 specular = light.specular * (spec * material.specular);  
                 
             vec3 result = ambient + diffuse + specular;
             FragColor = vec4(result, 1.0);
@@ -99,6 +105,27 @@ class GLSLShader
         )";
 
         LoadShaderFromString(vs, fs, std::string{});
+
+        activate();
+        setVec3("material.ambient", glm::vec3(1.0f, 1.0f, 1.0f));
+        setVec3("material.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
+        setVec3("material.specular", glm::vec3(0.15f, 0.15f, 0.15f));
+        setFloat("material.shininess", 32);
+        deactivate();
+    }
+
+    void SetColor(glm::vec3 color)
+    {
+        activate();
+        setVec3("material.ambient", color);
+        setVec3("material.diffuse", color);
+        deactivate();
+    }
+    void UseVertexColor(bool use_vertex_color = true)
+    {
+        activate();
+        setBool("use_vertex_color", use_vertex_color);
+        deactivate();
     }
 
     unsigned int GetShaderID() const

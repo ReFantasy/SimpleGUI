@@ -100,9 +100,8 @@ void Mesh::Draw(GLuint shader_program)
     glDrawElements(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_INT, 0);
 
     glBindVertexArray(0);
-    glUseProgram(0);
-
 }
+
 void Mesh::LoadDiffuseMap(std::string image_path)
 {
     diffuseMap = LoadTexture(image_path);

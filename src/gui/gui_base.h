@@ -45,7 +45,7 @@ class GUIBase
 
     void SetBackGroundColor(glm::vec3 bg_color)
     {
-        _bg_color = glm::vec4 (bg_color,1.0);
+        _bg_color = glm::vec4(bg_color, 1.0);
     }
     void SetBackGroundColor(glm::vec4 bg_color)
     {

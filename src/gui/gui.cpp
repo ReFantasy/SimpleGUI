@@ -4,8 +4,6 @@
 
 #include "gui.h"
 
-
-
 void GUI::BaseRender()
 {
     // 计算投影矩阵并传递给着色器
@@ -28,4 +26,3 @@ void GUI::BaseRender()
     // 用户渲染
     Render();
 }
-
