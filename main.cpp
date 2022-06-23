@@ -20,8 +20,8 @@ std::shared_ptr<Mesh> ground;
 std::shared_ptr<Mesh> CreateGround();
 std::shared_ptr<Sphere> sphere;
 std::shared_ptr<Sphere> CreateSphere();
-std::shared_ptr<Mesh> cube;
-std::shared_ptr<Mesh> CreateCube();
+std::shared_ptr<Mesh> box;
+std::shared_ptr<Mesh> CreateBox();
 
 class GUI3D : public GUI
 {
@@ -30,14 +30,12 @@ class GUI3D : public GUI
 
     void Render() override
     {
-        _shader.activate();
-        _shader.UseVertexColor();
 
-        cube->Draw(this->_shader.GetShaderID());
+        box->Draw(this->_shader.GetShaderID());
 
         ground->Draw(this->_shader.GetShaderID());
 
-        sphere->Draw(this->_shader.GetShaderID());
+        //sphere->Draw(this->_shader.GetShaderID());
     }
 };
 
@@ -52,9 +50,9 @@ int main(int argc, char *argv[])
     gui.GetCamera().UpdateCamPos(glm::vec3{3, 3, 3.0}).UpdateCamTar(glm::vec3(0, 0.5, 0));
     gui.GetLight().position = glm::vec3(0, 2, 2);
 
-    cube = CreateCube();
-    cube->LoadDiffuseMap(std::string(source_dir.string() + "/resource/container2.png").c_str());
-    cube->LoadSpecularMap(std::string(source_dir.string() + "/resource/container2_specular.png").c_str());
+    box = CreateBox();
+    box->LoadDiffuseMap(std::string(source_dir.string() + "/resource/container2.png").c_str());
+    box->LoadSpecularMap(std::string(source_dir.string() + "/resource/container2_specular.png").c_str());
 
     sphere = CreateSphere();
 
@@ -105,7 +103,7 @@ std::shared_ptr<Sphere> CreateSphere()
 
     return s;
 }
-std::shared_ptr<Mesh> CreateCube()
+std::shared_ptr<Mesh> CreateBox()
 {
     float vertices[] = {
         // positions          // normals           // texture coords
@@ -142,6 +140,8 @@ std::shared_ptr<Mesh> CreateCube()
         v.Position = glm::vec3(vertices[base + 0], vertices[base + 1], vertices[base + 2]) + glm::vec3(0, 0.6, 0);
         v.Normal = glm::vec3(vertices[base + 3], vertices[base + 4], vertices[base + 5]);
         v.Texcoord = glm::vec2(vertices[base + 6], vertices[base + 7]);
+        // v.Color = glm::vec3(RandomNumber<float>(0, 1), RandomNumber<float>(0, 1), RandomNumber<float>(0, 1));
+        v.Color = 0.5f * v.Position + glm::vec3(0.6, 0.3, 0.3);
         VV.push_back(v);
         indices.push_back(i);
     }

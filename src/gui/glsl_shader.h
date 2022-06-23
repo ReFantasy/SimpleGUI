@@ -111,6 +111,7 @@ class GLSLShader
         setVec3("material.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
         setVec3("material.specular", glm::vec3(0.15f, 0.15f, 0.15f));
         setFloat("material.shininess", 32);
+        UseVertexColor();
         deactivate();
     }
 
