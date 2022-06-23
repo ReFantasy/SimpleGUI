@@ -30,12 +30,13 @@ class GUI3D : public GUI
 
     void Render() override
     {
-
-        box->Draw(this->_shader.GetShaderID());
-
+        _shader.UseVertexColor(false);
+        _shader.SetColor(glm::vec3(0.7,0.7,0.7));
         ground->Draw(this->_shader.GetShaderID());
 
-        //sphere->Draw(this->_shader.GetShaderID());
+        _shader.UseVertexColor(true);
+        box->Draw(this->_shader.GetShaderID());
+        sphere->Draw(this->_shader.GetShaderID());
     }
 };
 
