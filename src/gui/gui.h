@@ -14,6 +14,7 @@
 #include "glsl_shader.h"
 #include "gui_base.h"
 #include "mesh.h"
+#include "memory"
 
 struct Light
 {
@@ -26,7 +27,8 @@ struct Light
 class GUI : public GUIBase
 {
   public:
-    using GUIBase::GUIBase;
+    GUI(int width = WIDTH_DEFAULT, int height = HEIGHT_DEFAULT, std::string title = WIN_NAME_DEFAULT,
+        glm::vec4 bg_color = WIN_BG_COLOR_DEFAULT);
 
     void BaseRender() override;
 
@@ -40,10 +42,11 @@ class GUI : public GUIBase
     {
         return _shader;
     }
-    Light &GetLight()
+    Light& GetLight()
     {
         return _light;
     }
+    void SetLight(const Light &new_light);
 
   protected:
     // 内置着色器
@@ -54,6 +57,11 @@ class GUI : public GUIBase
 
     // 光源位置
     Light _light; //;
+
+  private:
+    void init_light();
+    std::shared_ptr<Mesh> light_obj;
+    GLSLShader light_shader;
 };
 
 #endif // GUI_GUI_H
