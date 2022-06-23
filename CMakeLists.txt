@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(BREW_DIR "/usr/local")
 
-if(${CMAKE_SYSTEM_VERSION} STREQUAL "21.4.0")
+if(${CMAKE_SYSTEM_VERSION} STREQUAL "21.5.0")
     set(BREW_DIR "/opt/homebrew")
 endif()
 
