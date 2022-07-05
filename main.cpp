@@ -37,21 +37,20 @@ class GUI3D : public GUI
         lightColor.x = static_cast<float>(sin(glfwGetTime() * 2.0));
         lightColor.y = static_cast<float>(sin(glfwGetTime() * 0.7));
         lightColor.z = static_cast<float>(sin(glfwGetTime() * 1.3));
-        glm::vec3 diffuseColor = lightColor   * glm::vec3(0.8f); // decrease the influence
+        glm::vec3 diffuseColor = lightColor * glm::vec3(0.8f);   // decrease the influence
         glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
 
         Light new_light;
         new_light.ambient = ambientColor;
         new_light.diffuse = diffuseColor;
-        new_light.specular = glm::vec3(1,1,1);
-        //SetLight(new_light);
-
+        new_light.specular = glm::vec3(1, 1, 1);
+        // SetLight(new_light);
 
         /**
          * 渲染物体
          */
         _shader.UseVertexColor(false);
-        _shader.SetColor(glm::vec3(0.7,0.7,0.7));
+        _shader.SetColor(glm::vec3(0.7, 0.7, 0.7));
         ground->Draw(this->_shader.GetShaderID());
 
         _shader.UseVertexColor(true);
@@ -69,7 +68,7 @@ int main(int argc, char *argv[])
     GUI3D::SetVsync(false);
 
     gui.GetCamera().UpdateCamPos(glm::vec3{3, 3, 3}).UpdateCamTar(glm::vec3(0, 0, 0));
-    gui.GetLight().position = glm::vec3(0,2,2);
+    gui.GetLight().position = glm::vec3(0, 2, 2);
 
     box = CreateBox();
     box->LoadDiffuseMap(std::string(source_dir.string() + "/resource/container2.png").c_str());
