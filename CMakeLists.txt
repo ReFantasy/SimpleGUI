@@ -9,7 +9,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(BREW_DIR "/usr/local")
 
-if(${CMAKE_SYSTEM_VERSION} STREQUAL "21.5.0")
+
+if(${CMAKE_SYSTEM_VERSION} STREQUAL "21.6.0")
     set(BREW_DIR "/opt/homebrew")
 endif()
 
@@ -42,5 +43,3 @@ add_subdirectory(src)
 
 add_executable(main main.cpp)
 target_link_libraries(main gui)
-
-
