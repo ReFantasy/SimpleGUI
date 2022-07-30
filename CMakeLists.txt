@@ -22,8 +22,8 @@ include_directories(${OPENGL_INCLUDE_DIRS})
 link_libraries(${OPENGL_LIBRARIES})
 
 # GLFW
-include_directories("${BREW_DIR}/Cellar/glfw/3.3.7/include")
-link_directories("${BREW_DIR}/Cellar/glfw/3.3.7/lib")
+include_directories("${BREW_DIR}/Cellar/glfw/3.3.8/include")
+link_directories("${BREW_DIR}/Cellar/glfw/3.3.8/lib")
 link_libraries(glfw)
 
 #GLEW
