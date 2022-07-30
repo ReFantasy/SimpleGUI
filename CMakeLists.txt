@@ -6,6 +6,8 @@ ADD_DEFINITIONS(-D_UNICODE)
 
 set(CMAKE_CXX_STANDARD 17)
 #set(CMAKE_BUILD_TYPE Release)
+message("CMakeROOT: ${CMAKE_ROOT}")
+
 
 set(BREW_DIR "/usr/local")
 
@@ -26,10 +28,6 @@ include_directories("${BREW_DIR}/Cellar/glfw/3.3.8/include")
 link_directories("${BREW_DIR}/Cellar/glfw/3.3.8/lib")
 link_libraries(glfw)
 
-#GLEW
-include_directories("${BREW_DIR}/Cellar/glew/2.2.0_1/include")
-link_directories("${BREW_DIR}/Cellar/glew/2.2.0_1/lib")
-link_libraries(glew)
 
 # EIGEN
 include_directories("${BREW_DIR}/Cellar/eigen/3.4.0_1/include/eigen3")
@@ -39,7 +37,15 @@ include_directories("${BREW_DIR}/Cellar/glm/0.9.9.8/include")
 # ASSIMP
 #add_subdirectory(third)
 
+
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+find_package(GLEW REQUIRED)
+include_directories(${GLEW_INCLUDE_DIR})
+link_libraries(${GLEW_LIBRARY})
+
 add_subdirectory(src)
 
 add_executable(main main.cpp)
 target_link_libraries(main gui)
+
+

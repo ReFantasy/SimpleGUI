@@ -16,9 +16,15 @@
 #include "mesh.h"
 #include "memory"
 
+/**
+ * @brief 光源信息类
+ */
 struct Light
 {
+    // 光源坐标
     glm::vec3 position{1.2, 1.0, 2.0};
+
+    // 光源属性
     glm::vec3 ambient{0.4f, 0.4f, 0.4f};
     glm::vec3 diffuse{0.5f, 0.5f, 0.5f};
     glm::vec3 specular{1.0f, 1.0f, 1.0f};
