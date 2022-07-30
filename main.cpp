@@ -160,7 +160,6 @@ std::shared_ptr<Mesh> CreateBox()
         v.Position = glm::vec3(vertices[base + 0], vertices[base + 1], vertices[base + 2]) + glm::vec3(0, 0.6, 0);
         v.Normal = glm::vec3(vertices[base + 3], vertices[base + 4], vertices[base + 5]);
         v.Texcoord = glm::vec2(vertices[base + 6], vertices[base + 7]);
-        // v.Color = glm::vec3(RandomNumber<float>(0, 1), RandomNumber<float>(0, 1), RandomNumber<float>(0, 1));
         v.Color = 0.5f * v.Position + glm::vec3(0.6, 0.3, 0.3);
         VV.push_back(v);
         indices.push_back(i);
