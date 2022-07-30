@@ -2,11 +2,11 @@
 
 #include "camera.h"
 
-glm::vec3 in_up;
+glm::vec3 tmp_up;
 
 Camera::Camera(glm::vec3 cam_pos, glm::vec3 cam_tar, glm::vec3 up) : cameraPos(cam_pos), cameraTarget(cam_tar)
 {
-    in_up = up;
+    tmp_up = up;
     Update();
 }
 Camera &Camera::UpdateCamPos(glm::vec3 cam_pos)
@@ -23,7 +23,7 @@ Camera &Camera::UpdateCamTar(glm::vec3 cam_tar)
 }
 Camera &Camera::UpdateCamUp(glm::vec3 cam_up)
 {
-    in_up = cam_up;
+    tmp_up = cam_up;
     Update();
     return *this;
 }
@@ -38,6 +38,6 @@ glm::mat4 Camera::GetPerspectiveMatrix(float w_div_h)
 void Camera::Update() noexcept
 {
     glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
-    cameraRight = glm::normalize(glm::cross(in_up, cameraDirection));
+    cameraRight = glm::normalize(glm::cross(tmp_up, cameraDirection));
     cameraUp = glm::cross(cameraDirection, cameraRight);
 }
