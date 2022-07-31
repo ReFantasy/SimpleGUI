@@ -34,14 +34,15 @@ include_directories("${BREW_DIR}/Cellar/eigen/3.4.0_1/include/eigen3")
 # GLM
 include_directories("${BREW_DIR}/Cellar/glm/0.9.9.8/include")
 
+#GLEW
+include_directories("${BREW_DIR}/Cellar/glew/2.2.0_1/include")
+link_directories("${BREW_DIR}/Cellar/glew/2.2.0_1/lib")
+link_libraries(glew)
+
 # ASSIMP
 #add_subdirectory(third)
 
 
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-find_package(GLEW REQUIRED)
-include_directories(${GLEW_INCLUDE_DIR})
-link_libraries(${GLEW_LIBRARY})
 
 add_subdirectory(src)
 
