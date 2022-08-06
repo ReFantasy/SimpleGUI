@@ -1,4 +1,3 @@
-
 #include "src/gui/gui.h"
 #include "src/gui/mesh.h"
 #include <filesystem>
