@@ -9,12 +9,12 @@ int GUIBase::InitOpenGL()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_SAMPLES, 8);
+    glfwWindowHint(GLFW_SAMPLES, 4);
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-    /* 创建窗口及 OpenGL 上下文 */
+    /* 创建窗口 */
     _window_id = glfwCreateWindow(_width, _height, _window_title.c_str(), NULL, NULL);
     if (!_window_id)
     {
@@ -22,10 +22,11 @@ int GUIBase::InitOpenGL()
         return -1;
     }
 
+    /* 创建 OpenGL 上下文 */
     glfwMakeContextCurrent(_window_id);
 
-    /* 默认关闭垂直同步 */
-    glfwSwapInterval(0);
+    /* 默认开启垂直同步 */
+    glfwSwapInterval(1);
 
     /* 窗口缩放回调 */
     glfwSetFramebufferSizeCallback(_window_id,
@@ -36,7 +37,7 @@ int GUIBase::InitOpenGL()
     if (err != GLEW_OK)
     {
         fprintf(stderr, "GLEW Error: %s\n", glewGetErrorString(err));
-        exit(EXIT_FAILURE);
+        return -1;
     }
 
     /* 开启深度测试及超采样 */
@@ -44,26 +45,6 @@ int GUIBase::InitOpenGL()
     glEnable(GL_MULTISAMPLE);
 
     return 0;
-}
-
-void GUIBase::SetVsync(bool vsync)
-{
-    glfwSwapInterval(vsync);
-}
-
-double GUIBase::Fps()
-{
-    static double last_frame = 0;
-    double cur_frame = glfwGetTime();
-    auto fps = 1.0 / (cur_frame - last_frame);
-    auto fps_str = std::to_string(fps);
-    fps_str = fps_str.substr(0, fps_str.find('.'));
-    last_frame = cur_frame;
-
-    // show FPS
-    glfwSetWindowTitle(_window_id, (_window_title + "  FPS:" + fps_str).c_str());
-
-    return fps;
 }
 
 void GUIBase::Show()
@@ -89,4 +70,19 @@ void GUIBase::Show()
     }
 
     glfwTerminate();
+}
+void GUIBase::SetVsync(bool vsync)
+{
+    glfwSwapInterval(vsync);
+}
+double GUIBase::Fps()
+{
+    static double last_frame = 0;
+    double cur_frame = glfwGetTime();
+    auto fps = 1.0 / (cur_frame - last_frame);
+    auto fps_str = std::to_string(fps);
+    fps_str = fps_str.substr(0, fps_str.find('.'));
+    last_frame = cur_frame;
+    glfwSetWindowTitle(_window_id, (_window_title + "  FPS:" + fps_str).c_str());
+    return fps;
 }

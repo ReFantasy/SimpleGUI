@@ -4,6 +4,7 @@
 #include <memory>
 #include <random>
 #include <string>
+#include <iostream>
 
 template <typename T, typename Distribution = std::uniform_real_distribution<T>>
 T RandomNumber(const T &lo = 0, const T &hi = 1)
@@ -62,7 +63,7 @@ int main(int argc, char *argv[])
     std::filesystem::path source_dir(PROJECT_SOURCE_DIR);
 
     GUI3D gui(800, 600);
-    gui.SetBackGroundColor({0, 0, 0, 0});
+    gui.SetBackGroundColor({0, 0, 0},0.1);
     GUI3D::SetVsync(false);
 
     gui.GetCamera().UpdateCamPos(glm::vec3{3, 3, 3}).UpdateCamTar(glm::vec3(0, 0, 0));

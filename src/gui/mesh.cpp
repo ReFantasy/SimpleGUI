@@ -66,7 +66,7 @@ bool Mesh::GenGLBuffers()
     glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), &_vertices[0],
                  GL_STATIC_DRAW); // GL_STATIC_DRAW GL_DYNAMIC_DRAW
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indices.size() * sizeof(unsigned int), &_indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indices.size() * sizeof(unsigned int), &_indices[0], GL_DYNAMIC_DRAW);
 
     // set the vertex attribute pointers
     // vertex Positions
