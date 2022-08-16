@@ -1,73 +1,91 @@
 /*
- * Created by refantasy on 2022/6/20.
  *
- * 图形界面类，处理相机及着色器
+ * 用户界面类，处理相机及着色器
  * 通过继承该类并重载 void Render() 函数，实现自定义对象的渲染
  *
  */
 
-#ifndef GUI_GUI_H
-#define GUI_GUI_H
+#ifndef __GUI_H__
+#define __GUI_H__
 
 #include "camera.h"
-#include "glm/glm.hpp"
 #include "glsl_shader.h"
 #include "gui_base.h"
-#include "mesh.h"
 #include "memory"
+#include "mesh.h"
 
-/**
- * @brief 光源信息类
- */
+/* 光源属性 */
 struct Light
 {
     // 光源坐标
     glm::vec3 position{1.2, 1.0, 2.0};
 
-    // 光源属性
+    // 光源颜色
     glm::vec3 ambient{0.4f, 0.4f, 0.4f};
     glm::vec3 diffuse{0.5f, 0.5f, 0.5f};
     glm::vec3 specular{1.0f, 1.0f, 1.0f};
 };
 
-class GUI : public GUIBase
+/*
+ * 场景类定义了点光源和相机
+ */
+class Scene
 {
+    friend class GUI;
+
   public:
-    GUI(int width = WIDTH_DEFAULT, int height = HEIGHT_DEFAULT, std::string title = WIN_NAME_DEFAULT,
-        glm::vec4 bg_color = WIN_BG_COLOR_DEFAULT);
-
-    void BaseRender() override;
-
-    virtual void Render() = 0;
-
-    Camera &GetCamera()
+    Scene()
     {
-        return cam;
+        init_light();
     }
-    GLSLShader &GetShader()
-    {
-        return _shader;
-    }
-    Light& GetLight()
+
+    Light &GetLight()
     {
         return _light;
     }
-    void SetLight(const Light &new_light);
 
-  protected:
-    // 内置着色器
-    GLSLShader _shader;
-
-    // 相机
-    Camera cam;
-
-    // 光源位置
-    Light _light; //;
+    Camera &GetCamera()
+    {
+        return _cam;
+    }
 
   private:
-    void init_light();
+    /* 相机 */
+    Camera _cam;
+
+    /* 光源 */
+    Light _light;
     std::shared_ptr<Mesh> light_obj;
     GLSLShader light_shader;
+    void init_light();
+
+  private:
+    void Render(int win_width, int win_height);
 };
 
-#endif // GUI_GUI_H
+/**
+ * 用户自定义界面类
+ * 通过重载机制，在 void Render() 函数中进行对象的渲染
+ *
+ */
+class GUI : public GUIBase
+{
+  public:
+    using GUIBase::GUIBase;
+
+    /**
+     * 重载函数，执行具体的渲染任务
+     */
+    virtual void Render() = 0;
+
+    /* 场景: 相机 光源 */
+    Scene scene;
+
+    /* 着色器 */
+    GLSLShader _shader;
+
+  private:
+    void BaseRender() final;
+};
+
+#endif // __GUI_H__

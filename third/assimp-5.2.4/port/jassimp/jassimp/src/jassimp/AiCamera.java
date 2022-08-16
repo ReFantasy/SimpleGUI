@@ -57,9 +57,9 @@ package jassimp;
  * // Get the camera matrix for a camera at a specific time
  * // if the node hierarchy for the camera does not contain
  * // at least one animated node this is a static computation
- * get-camera-matrix (node sceneRoot, camera cam) : matrix
+ * get-camera-matrix (node sceneRoot, camera _cam) : matrix
  * {
- *    node   cnd = find-node-for-camera(cam)
+ *    node   cnd = find-node-for-camera(_cam)
  *    matrix cmt = identity()
  *
  *    // as usual - get the absolute camera transformation for this frame
@@ -72,7 +72,7 @@ package jassimp;
  *    end for
  *
  *    // now multiply with the camera's own local transform
- *    cam = mult-matrices (cam, get-camera-matrix(cmt) )
+ *    _cam = mult-matrices (_cam, get-camera-matrix(cmt) )
  * }
  * </pre></code>
  *

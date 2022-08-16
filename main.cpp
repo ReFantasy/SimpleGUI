@@ -40,10 +40,11 @@ class GUI3D : public GUI
         glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
 
         Light new_light;
+        new_light.position = glm::vec3(0, 2, 2);
         new_light.ambient = ambientColor;
         new_light.diffuse = diffuseColor;
         new_light.specular = glm::vec3(1, 1, 1);
-        // SetLight(new_light);
+        scene.GetLight() = new_light;
 
         /**
          * 渲染物体
@@ -64,10 +65,10 @@ int main(int argc, char *argv[])
 
     GUI3D gui(800, 600);
     gui.SetBackGroundColor({0, 0, 0},0.1);
-    GUI3D::SetVsync(false);
+    //GUI3D::SetVsync(false);
 
-    gui.GetCamera().UpdateCamPos(glm::vec3{3, 3, 3}).UpdateCamTar(glm::vec3(0, 0, 0));
-    gui.GetLight().position = glm::vec3(0, 2, 2);
+    gui.scene.GetCamera().UpdateCamPos(glm::vec3{3, 3, 3}).UpdateCamTar(glm::vec3(0, 0, 0));
+    gui.scene.GetLight().position = glm::vec3(0, 2, 2);
 
     box = CreateBox();
     box->LoadDiffuseMap(std::string(source_dir.string() + "/resource/container2.png").c_str());
