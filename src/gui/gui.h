@@ -33,7 +33,7 @@ class Scene
 {
     friend class GUI;
 
-  public:
+public:
     Scene()
     {
         init_light();
@@ -49,7 +49,7 @@ class Scene
         return _cam;
     }
 
-  private:
+private:
     /* 相机 */
     Camera _cam;
 
@@ -59,7 +59,7 @@ class Scene
     GLSLShader light_shader;
     void init_light();
 
-  private:
+private:
     void Render(int win_width, int win_height);
 };
 
@@ -70,7 +70,7 @@ class Scene
  */
 class GUI : public GUIBase
 {
-  public:
+public:
     using GUIBase::GUIBase;
 
     /**
@@ -84,7 +84,7 @@ class GUI : public GUIBase
     /* 着色器 */
     GLSLShader _shader;
 
-  private:
+private:
     void BaseRender() final;
 };
 

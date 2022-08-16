@@ -14,9 +14,9 @@
 #include <string>
 
 /* 窗口默认宽度 */
-#define WIDTH_DEFAULT 512
+#define WIDTH_DEFAULT    512
 /* 默认窗口高度 */
-#define HEIGHT_DEFAULT 512
+#define HEIGHT_DEFAULT   512
 /* 窗口默认名称 */
 #define WIN_NAME_DEFAULT "OpenGL Window"
 /* 窗口默认背景颜色 */
@@ -27,7 +27,7 @@
 
 class GUIBase
 {
-  public:
+public:
     /**
      * 默认构造函数
      * @param width 窗口宽
@@ -70,18 +70,18 @@ class GUIBase
      */
     void Show();
 
-  protected:
+protected:
     /**
      * 纯虚函数，重载执行渲染任务
      */
     virtual void BaseRender() = 0;
 
-  protected:
+protected:
     /* 窗口ID */
     GLFWwindow *_window_id = nullptr;
 
     /* 窗口宽高 */
-    int _width = WIDTH_DEFAULT;
+    int _width  = WIDTH_DEFAULT;
     int _height = HEIGHT_DEFAULT;
 
     /* 窗口背景颜色 */
@@ -90,7 +90,7 @@ class GUIBase
     /* 窗口标题 */
     std::string _window_title = std::string("OpenGL Window");
 
-  private:
+private:
     /**
      * 初始化 OpenGL 相关环境变量
      * @return 成功返回 0，否则返回 -1

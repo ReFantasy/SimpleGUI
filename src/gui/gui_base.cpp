@@ -3,8 +3,7 @@
 int GUIBase::InitOpenGL()
 {
     /* 初始化 GLFW */
-    if (!glfwInit())
-        return -1;
+    if (!glfwInit()) return -1;
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
@@ -78,11 +77,11 @@ void GUIBase::SetVsync(bool vsync)
 double GUIBase::Fps()
 {
     static double last_frame = 0;
-    double cur_frame = glfwGetTime();
-    auto fps = 1.0 / (cur_frame - last_frame);
-    auto fps_str = std::to_string(fps);
-    fps_str = fps_str.substr(0, fps_str.find('.'));
-    last_frame = cur_frame;
+    double cur_frame         = glfwGetTime();
+    auto fps                 = 1.0 / (cur_frame - last_frame);
+    auto fps_str             = std::to_string(fps);
+    fps_str                  = fps_str.substr(0, fps_str.find('.'));
+    last_frame               = cur_frame;
     glfwSetWindowTitle(_window_id, (_window_title + "  FPS:" + fps_str).c_str());
     return fps;
 }

@@ -34,10 +34,10 @@ void Scene::init_light()
     for (int i = 0; i < 36; i++)
     {
         Vertex v;
-        int base = 3 * i;
+        int base    = 3 * i;
         float scale = 0.2;
-        v.Position = glm::vec3(vertices[base + 0] * scale, vertices[base + 1] * scale, vertices[base + 2] * scale);
-        v.Color = glm::vec3(1, 1, 1);
+        v.Position  = glm::vec3(vertices[base + 0] * scale, vertices[base + 1] * scale, vertices[base + 2] * scale);
+        v.Color     = glm::vec3(1, 1, 1);
         light_vertex.push_back(v);
         light_indices.push_back(i);
     }
@@ -84,8 +84,7 @@ void Scene::Render(int width, int height)
     light_shader.setMat4("projection", _cam.GetPerspectiveMatrix((float)width / (float)height));
     light_shader.deactivate();
 
-    if (light_obj)
-        light_obj->Draw(light_shader.GetShaderID());
+    if (light_obj) light_obj->Draw(light_shader.GetShaderID());
 }
 
 void GUI::BaseRender()

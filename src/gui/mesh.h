@@ -28,7 +28,7 @@ struct Vertex
 
 class Mesh
 {
-  public:
+public:
     explicit Mesh(std::vector<Vertex> vertices = std::vector<Vertex>{},
                   std::vector<unsigned int> indices = std::vector<unsigned int>{})
         : _vertices(std::move(vertices)), _indices(std::move(indices)){};
@@ -58,16 +58,16 @@ class Mesh
     unsigned int diffuseMap;
     unsigned int specularMap;
 
-  protected:
+protected:
     GLuint VAO = 0, VBO = 0, EBO = 0;
 
-  private:
+private:
     unsigned int LoadTexture(std::string image_path);
 };
 
 class Points : public Mesh
 {
-  public:
+public:
     explicit Points(std::vector<Vertex> vertices = std::vector<Vertex>{}) : Mesh(std::move(vertices), {})
     {
     }
@@ -80,7 +80,7 @@ class Points : public Mesh
 
 class Sphere : public Mesh
 {
-  public:
+public:
     explicit Sphere(std::vector<Vertex> vertices = std::vector<Vertex>{},
                     std::vector<float> radius = std::vector<float>{}, int prec = 48);
     explicit Sphere(const std::vector<Vertex> &vertices = std::vector<Vertex>{}, float radius = 0.01, int prec = 48)
