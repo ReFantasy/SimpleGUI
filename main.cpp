@@ -1,3 +1,4 @@
+#include "sphere.h"
 #include "src/gui/gui.h"
 #include "src/gui/mesh.h"
 #include <filesystem>
@@ -22,6 +23,9 @@ std::shared_ptr<Sphere> CreateSphere();
 std::shared_ptr<Mesh> box;
 std::shared_ptr<Mesh> CreateBox();
 
+// sphere sphere2(glm::vec3(1,1,1), 0.3);
+// sphere *sphere2_ptr;
+
 class GUI3D : public GUI
 {
 public:
@@ -45,7 +49,7 @@ public:
         new_light.ambient  = ambientColor;
         new_light.diffuse  = diffuseColor;
         new_light.specular = glm::vec3(1, 1, 1);
-        scene.GetLight()   = new_light;
+        // scene.GetLight()   = new_light;
 
         /**
          * 渲染物体
@@ -56,7 +60,9 @@ public:
 
         _shader.UseVertexColor(true);
         box->Draw(this->_shader.GetShaderID());
-        sphere->Draw(this->_shader.GetShaderID());
+
+        sphere->SetSceneInfo(GetWindowID(), scene);
+        sphere->Draw();
     }
 };
 
@@ -64,11 +70,11 @@ int main(int argc, char *argv[])
 {
     std::filesystem::path source_dir(PROJECT_SOURCE_DIR);
 
-    GUI3D gui(800, 600);
+    GUI3D gui(800, 800);
     gui.SetBackGroundColor({0, 0, 0}, 0.1);
-    // GUI3D::SetVsync(false);
+    GUI3D::SetVsync();
 
-    gui.scene.GetCamera().UpdateCamPos(glm::vec3{3, 3, 3}).UpdateCamTar(glm::vec3(0, 0, 0));
+    gui.scene.GetCamera().UpdateCamPos(glm::vec3{5, 2, 2}).UpdateCamTar(glm::vec3(0, 0, 0));
     gui.scene.GetLight().position = glm::vec3(0, 2, 2);
 
     box = CreateBox();
@@ -110,19 +116,21 @@ std::shared_ptr<Mesh> CreateGround()
 }
 std::shared_ptr<Sphere> CreateSphere()
 {
-    Vertex s1, s2, s3;
-    s1.Position = glm::vec3(RandomNumber<float>(-2, 2), RandomNumber<float>(0.3, 1), RandomNumber<float>(-2, 2));
-    s1.Color    = glm::vec3(1, 0, 0);
-    s2.Position = glm::vec3(RandomNumber<float>(-2, 2), RandomNumber<float>(0.3, 1), RandomNumber<float>(-2, 1));
-    s2.Color    = glm::vec3(0, 1, 0);
-    s3.Position = glm::vec3(RandomNumber<float>(-2, 2), RandomNumber<float>(0.3, 1), RandomNumber<float>(-2, 2));
-    s3.Color    = glm::vec3(0, 0, 1);
+    std::vector<glm::vec3> positions;
+    std::vector<float> radius;
+    std::vector<glm::vec3> color;
 
-    std::vector<Vertex> s_v{s1, s2, s3};
-    auto s = std::make_shared<Sphere>(s_v, 0.3, 48);
-    s->GenGLBuffers();
-
-    return s;
+    int n = 1000;
+    for (int i = 0; i < n; i++)
+    {
+        positions.push_back(
+            glm::vec3(RandomNumber<float>(-1, 1), RandomNumber<float>(-1, 1), RandomNumber<float>(-1, 1)));
+        radius.push_back(0.025);
+        color.push_back(glm::vec3(1, 0, 0));
+    }
+    auto sphere = std::make_shared<Sphere>(positions, radius, color, 24);
+    sphere->GenGLBuffers();
+    return sphere;
 }
 std::shared_ptr<Mesh> CreateBox()
 {

@@ -8,7 +8,6 @@
 #include "GL/glew.h"
 #include "glm/glm.hpp"
 #include <string>
-#include <utility>
 #include <vector>
 
 struct Vertex
@@ -29,7 +28,7 @@ struct Vertex
 class Mesh
 {
 public:
-    explicit Mesh(std::vector<Vertex> vertices = std::vector<Vertex>{},
+    explicit Mesh(std::vector<Vertex> vertices      = std::vector<Vertex>{},
                   std::vector<unsigned int> indices = std::vector<unsigned int>{})
         : _vertices(std::move(vertices)), _indices(std::move(indices)){};
 
@@ -46,7 +45,7 @@ public:
     void UpdateVertexDataToGLBuffer()
     {
         glBindVertexArray(VAO);
-        glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), &_vertices[0], GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), &_vertices[0], GL_DYNAMIC_DRAW);
         glBindVertexArray(0);
     }
 
@@ -78,14 +77,4 @@ public:
     }
 };
 
-class Sphere : public Mesh
-{
-public:
-    explicit Sphere(std::vector<Vertex> vertices = std::vector<Vertex>{},
-                    std::vector<float> radius = std::vector<float>{}, int prec = 48);
-    explicit Sphere(const std::vector<Vertex> &vertices = std::vector<Vertex>{}, float radius = 0.01, int prec = 48)
-        : Sphere(vertices, std::vector<float>(vertices.size(), radius), prec)
-    {
-    }
-};
 #endif // GUI_MESH_H

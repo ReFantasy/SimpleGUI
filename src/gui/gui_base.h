@@ -70,6 +70,11 @@ public:
      */
     void Show();
 
+    GLFWwindow *GetWindowID()const
+    {
+        return _window_id;
+    }
+
 protected:
     /**
      * 纯虚函数，重载执行渲染任务

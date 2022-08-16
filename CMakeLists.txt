@@ -18,6 +18,11 @@ endif()
 
 add_definitions(-DPROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 
+
+include_directories("${PROJECT_SOURCE_DIR}/src/gui")
+include_directories("${PROJECT_SOURCE_DIR}/src/model")
+#include_directories("./src/ext/")
+
 # OpenGL
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIRS})
@@ -47,6 +52,6 @@ link_libraries(glew)
 add_subdirectory(src)
 
 add_executable(main main.cpp)
-target_link_libraries(main gui)
+target_link_libraries(main gui model)
 
 

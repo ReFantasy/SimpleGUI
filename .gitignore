@@ -42,3 +42,4 @@ cmake-build-release/
 .DS_Store
 build/
 .vscode/
+clion_build/
