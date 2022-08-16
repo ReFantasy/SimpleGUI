@@ -124,9 +124,9 @@ std::shared_ptr<Sphere> CreateSphere()
     for (int i = 0; i < n; i++)
     {
         positions.push_back(
-            glm::vec3(RandomNumber<float>(-1, 1), RandomNumber<float>(-1, 1), RandomNumber<float>(-1, 1)));
+            glm::vec3(RandomNumber<float>(-1, 1), RandomNumber<float>(0.05, 1), RandomNumber<float>(-1, 1)));
         radius.push_back(0.025);
-        color.push_back(glm::vec3(1, 0, 0));
+        color.push_back(glm::vec3(RandomNumber<float>(0, 1), RandomNumber<float>(0, 1), RandomNumber<float>(0, 1)));
     }
     auto sphere = std::make_shared<Sphere>(positions, radius, color, 24);
     sphere->GenGLBuffers();
