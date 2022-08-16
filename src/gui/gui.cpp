@@ -5,8 +5,6 @@
 #include "gui.h"
 #include <vector>
 
-#include <utility>
-
 void Scene::init_light()
 {
     /**
