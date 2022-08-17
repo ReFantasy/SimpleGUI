@@ -3,6 +3,7 @@
 //
 
 #include "gui.h"
+#include "camera.h"
 #include <vector>
 
 
