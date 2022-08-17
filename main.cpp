@@ -60,6 +60,12 @@ public:
         _shader->UseVertexColor(true);
         //box->Draw(this->_shader->GetShaderID());
 
+        auto &pos = sphere->GetPosition();
+        for(auto &p:pos)
+        {
+            p[0]+=0.001;
+        }
+        sphere->Update();
         sphere->SetSceneInfo(GetWindowID(), *scene);
         sphere->Draw();
     }
@@ -69,9 +75,9 @@ int main(int argc, char *argv[])
 {
     std::filesystem::path source_dir(PROJECT_SOURCE_DIR);
 
-    GUI3D gui(800, 800);
+    GUI3D gui(800, 600);
     gui.SetBackGroundColor({0, 0, 0}, 0.1);
-    GUI3D::SetVsync();
+    GUI3D::SetVsync(true);
 
     gui.scene->GetCamera().UpdateCamPos(glm::vec3{5, 2, 2}).UpdateCamTar(glm::vec3(0, 0, 0));
     gui.scene->GetLight().position = glm::vec3(0, 2, 2);
@@ -93,7 +99,7 @@ std::shared_ptr<Sphere> CreateSphere()
     std::vector<float> radius;
     std::vector<glm::vec3> color;
 
-    int n = 100;
+    int n = 600;
     for (int i = 0; i < n; i++)
     {
         positions.push_back(

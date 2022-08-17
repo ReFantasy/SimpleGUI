@@ -51,6 +51,13 @@ public:
      */
     void Draw();
 
+    void Update();
+
+    std::vector<glm::vec3>& GetPosition()
+    {
+        return _positions;
+    }
+
     /**
      * 返回着色器对象
      * @return
