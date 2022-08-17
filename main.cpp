@@ -1,8 +1,7 @@
 #include "sphere.h"
-#include "src/gui/gui.h"
+#include "gui.h"
 #include "src/gui/mesh.h"
 #include <filesystem>
-#include <iostream>
 #include <memory>
 #include <random>
 #include <string>
@@ -120,7 +119,7 @@ std::shared_ptr<Sphere> CreateSphere()
     std::vector<float> radius;
     std::vector<glm::vec3> color;
 
-    int n = 1000;
+    int n = 100;
     for (int i = 0; i < n; i++)
     {
         positions.push_back(

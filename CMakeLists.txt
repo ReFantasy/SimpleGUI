@@ -4,13 +4,15 @@ project(GUI)
 ADD_DEFINITIONS(-DUNICODE)
 ADD_DEFINITIONS(-D_UNICODE)
 
+# 库文件输出目录
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/install/lib)
+# 可执行文件输出目录
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/install/lib)
+
 set(CMAKE_CXX_STANDARD 20)
 #set(CMAKE_BUILD_TYPE Release)
-message("CMakeROOT: ${CMAKE_ROOT}")
-
 
 set(BREW_DIR "/usr/local")
-
 
 if(${CMAKE_SYSTEM_VERSION} STREQUAL "21.6.0")
     set(BREW_DIR "/opt/homebrew")
@@ -21,7 +23,7 @@ add_definitions(-DPROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 
 include_directories("${PROJECT_SOURCE_DIR}/src/gui")
 include_directories("${PROJECT_SOURCE_DIR}/src/model")
-#include_directories("./src/ext/")
+
 
 # OpenGL
 find_package(OpenGL REQUIRED)
