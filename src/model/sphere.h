@@ -9,10 +9,13 @@
 #define GUI_SPHERE_H
 
 #include "glm/glm.hpp"
-#include "glsl_shader.h"
+
 #include "scene.h"
 #include <string>
 #include <vector>
+
+class GLSLShader;
+class GLFWwindow;
 
 class Sphere
 {
@@ -52,16 +55,12 @@ public:
      * 返回着色器对象
      * @return
      */
-    GLSLShader &Shader()
+    std::shared_ptr<GLSLShader> &Shader()
     {
         return sphere_shader;
     }
 
-    virtual ~Sphere()
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
-    }
+    virtual ~Sphere();
 
 protected:
     /* 单位球的顶点 */
@@ -77,10 +76,10 @@ protected:
     std::vector<glm::vec3> _color;
 
     /* 着色器对象 */
-    GLSLShader sphere_shader;
+    std::shared_ptr<GLSLShader> sphere_shader;
 
     /* OpenGL 缓冲对象 */
-    GLuint VAO = 0, VBO = 0, EBO = 0;
+    unsigned int VAO = 0, VBO = 0, EBO = 0;
     unsigned int instance_pos_vbo;
     unsigned int instance_color_vbo;
     unsigned int instance_radius_vbo;

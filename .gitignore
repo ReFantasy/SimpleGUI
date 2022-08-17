@@ -43,3 +43,4 @@ cmake-build-release/
 build/
 .vscode/
 clion_build/
+install/

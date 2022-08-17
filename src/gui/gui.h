@@ -8,15 +8,12 @@
 #ifndef __GUI_H__
 #define __GUI_H__
 
-
-#include "glsl_shader.h"
 #include "gui_base.h"
 #include "memory"
-#include "scene.h"
 
 
-
-
+class GLSLShader;
+class Scene;
 
 /**
  * 用户自定义界面类
@@ -26,7 +23,8 @@
 class GUI : public GUIBase
 {
 public:
-    using GUIBase::GUIBase;
+    explicit GUI(int width = WIDTH_DEFAULT, int height = HEIGHT_DEFAULT, std::string title = WIN_NAME_DEFAULT,
+                 glm::vec4 bg_color = WIN_BG_COLOR_DEFAULT);
 
     /**
      * 重载函数，执行具体的渲染任务
@@ -34,10 +32,10 @@ public:
     virtual void Render() = 0;
 
     /* 场景: 相机 光源 */
-    Scene scene;
+    std::shared_ptr<Scene> scene;
 
     /* 着色器 */
-    GLSLShader _shader;
+    std::shared_ptr<GLSLShader> _shader;
 
 private:
     void BaseRender() final;

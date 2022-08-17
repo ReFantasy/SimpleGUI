@@ -3,9 +3,12 @@
 //
 
 #include "scene.h"
+#include "glsl_shader.h"
+#include "mesh.h"
 
 void Scene::init_light()
 {
+    light_shader = std::make_shared<GLSLShader>();
     /**
      * 光源顶点属性数组
      */
@@ -70,18 +73,24 @@ void Scene::init_light()
                                 FragColor = vec4(light_color, 1.0); // set alle 4 vector values to 1.0
                             }
                         )";
-    light_shader.LoadShaderFromString(vs, fs, "");
+    light_shader->LoadShaderFromString(vs, fs, "");
 }
 void Scene::Render(int width, int height)
 {
     // 绘制光源对象
-    light_shader.activate();
-    light_shader.setVec3("light_position", _light.position);
-    light_shader.setVec3("light_color", _light.diffuse + _light.ambient);
-    light_shader.setMat4("model", glm::mat4(1));
-    light_shader.setMat4("view", _cam.GetViewMatrix());
-    light_shader.setMat4("projection", _cam.GetPerspectiveMatrix((float)width / (float)height));
-    light_shader.deactivate();
+    light_shader->activate();
+    light_shader->setVec3("light_position", _light.position);
+    light_shader->setVec3("light_color", _light.diffuse + _light.ambient);
+    light_shader->setMat4("model", glm::mat4(1));
+    light_shader->setMat4("view", _cam.GetViewMatrix());
+    light_shader->setMat4("projection", _cam.GetPerspectiveMatrix((float)width / (float)height));
+    light_shader->deactivate();
 
-    if (light_obj) light_obj->Draw(light_shader.GetShaderID());
+    if (light_obj) light_obj->Draw(light_shader->GetShaderID());
+}
+Scene::Scene()
+{
+
+    init_light();
+
 }

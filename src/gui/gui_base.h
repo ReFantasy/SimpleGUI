@@ -6,12 +6,13 @@
 
 #ifndef __GUI_BASE_H__
 #define __GUI_BASE_H__
-#include "GL/glew.h"
-#include "GLFW/glfw3.h"
+
 #include "glm/glm.hpp"
 #include <iostream>
 #include <memory>
 #include <string>
+
+class GLFWwindow;
 
 /* 窗口默认宽度 */
 #define WIDTH_DEFAULT    512
@@ -70,7 +71,7 @@ public:
      */
     void Show();
 
-    GLFWwindow *GetWindowID()const
+    GLFWwindow *GetWindowID() const
     {
         return _window_id;
     }

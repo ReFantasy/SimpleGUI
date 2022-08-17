@@ -1,11 +1,5 @@
 AUX_SOURCE_DIRECTORY(. SRC_LIST)
-add_library(model ${SRC_LIST} )
+add_library(model STATIC ${SRC_LIST} )
 
-FILE(GLOB HEADER_FILE ./*.h ./*.hpp) #所有头文件存入变量
-# 安装
-#INSTALL(TARGETS gui ARCHIVE DESTINATION ${PROJECT_SOURCE_DIR}/install/lib)
-#FOREACH(F ${HEADER_FILE})
-#    INSTALL(FILES ${F} DESTINATION ${PROJECT_SOURCE_DIR}/install/include)
-#ENDFOREACH(F)
-
-file(COPY ${HEADER_FILE} DESTINATION ${PROJECT_SOURCE_DIR}/install/include)
+#FILE(GLOB HEADER_FILE ./*.h ./*.hpp) #所有头文件存入变量
+#file(COPY ${HEADER_FILE} DESTINATION ${PROJECT_SOURCE_DIR}/install/include)

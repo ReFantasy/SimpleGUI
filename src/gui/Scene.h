@@ -5,9 +5,10 @@
 #ifndef GUI_SCENE_H
 #define GUI_SCENE_H
 #include "camera.h"
-#include "mesh.h"
-#include "glsl_shader.h"
+#include <memory>
 
+class Mesh;
+class GLSLShader;
 /* 光源属性 */
 struct Light
 {
@@ -29,10 +30,7 @@ class Scene
     friend class Sphere2;
 
 public:
-    Scene()
-    {
-        init_light();
-    }
+    Scene();
 
     Light &GetLight()
     {
@@ -51,7 +49,7 @@ private:
     /* 光源 */
     Light _light;
     std::shared_ptr<Mesh> light_obj;
-    GLSLShader light_shader;
+    std::shared_ptr<GLSLShader> light_shader;
     void init_light();
 
 private:

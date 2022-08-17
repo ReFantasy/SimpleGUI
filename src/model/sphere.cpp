@@ -3,10 +3,12 @@
 //
 
 #include "sphere.h"
-
+#include "glsl_shader.h"
+#include <GL/glew.h>
 #include "GLFW/glfw3.h"
 
 #include <utility>
+
 Sphere::Sphere(std::vector<glm::vec3> positions, std::vector<float> radius, std::vector<glm::vec3> color, int prec)
     : _positions(std::move(positions)), _radius(std::move(radius)), _color(std::move(color))
 {
@@ -135,14 +137,15 @@ Sphere::Sphere(std::vector<glm::vec3> positions, std::vector<float> radius, std:
         }
         )";
 
-    sphere_shader.LoadShaderFromString(vs, fs, std::string{});
-    sphere_shader.activate();
-    sphere_shader.setVec3("material.ambient", glm::vec3(1.0f, 1.0f, 1.0f));
-    sphere_shader.setVec3("material.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
-    sphere_shader.setVec3("material.specular", glm::vec3(0.15f, 0.15f, 0.15f));
-    sphere_shader.setFloat("material.shininess", 32);
-    sphere_shader.UseVertexColor();
-    sphere_shader.deactivate();
+    sphere_shader = std::make_shared<GLSLShader>();
+    sphere_shader->LoadShaderFromString(vs, fs, std::string{});
+    sphere_shader->activate();
+    sphere_shader->setVec3("material.ambient", glm::vec3(1.0f, 1.0f, 1.0f));
+    sphere_shader->setVec3("material.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
+    sphere_shader->setVec3("material.specular", glm::vec3(0.15f, 0.15f, 0.15f));
+    sphere_shader->setFloat("material.shininess", 32);
+    sphere_shader->UseVertexColor();
+    sphere_shader->deactivate();
 }
 bool Sphere::GenGLBuffers()
 {
@@ -165,7 +168,6 @@ bool Sphere::GenGLBuffers()
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * _radius.size(), &_radius[0], GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-
     // create buffers/arrays
 
     glGenBuffers(1, &VBO);
@@ -177,29 +179,30 @@ bool Sphere::GenGLBuffers()
     glBufferData(GL_ARRAY_BUFFER, sphere_vertices.size() * sizeof(glm::vec3), &sphere_vertices[0],
                  GL_STATIC_DRAW); // GL_STATIC_DRAW GL_DYNAMIC_DRAW
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sphere_indices.size() * sizeof(unsigned int), &sphere_indices[0], GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sphere_indices.size() * sizeof(unsigned int), &sphere_indices[0],
+                 GL_DYNAMIC_DRAW);
 
     // set the vertex attribute pointers
     // vertex
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void *)0);
 
     // also set instance data
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, instance_pos_vbo); // this attribute comes from a different vertex buffer
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void *)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glVertexAttribDivisor(1, 1); // tell OpenGL this is an instanced vertex attribute.
 
     glEnableVertexAttribArray(2);
     glBindBuffer(GL_ARRAY_BUFFER, instance_color_vbo); // this attribute comes from a different vertex buffer
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void *)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glVertexAttribDivisor(2, 1);
 
     glEnableVertexAttribArray(3);
     glBindBuffer(GL_ARRAY_BUFFER, instance_radius_vbo); // this attribute comes from a different vertex buffer
-    glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(float), (void*)0);
+    glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(float), (void *)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glVertexAttribDivisor(3, 1);
 
@@ -207,29 +210,35 @@ bool Sphere::GenGLBuffers()
 }
 void Sphere::Draw()
 {
-    glUseProgram(sphere_shader.GetShaderID());
+    glUseProgram(sphere_shader->GetShaderID());
     glBindVertexArray(VAO);
-    glDrawElementsInstanced(GL_TRIANGLES,sphere_indices.size(), GL_UNSIGNED_INT, 0, _positions.size());
+    glDrawElementsInstanced(GL_TRIANGLES, sphere_indices.size(), GL_UNSIGNED_INT, 0, _positions.size());
     glBindVertexArray(0);
     glUseProgram(0);
 }
 void Sphere::SetSceneInfo(GLFWwindow *_window_id, Scene &scene)
 {
-    int width =100;
+    int width  = 100;
     int height = 100;
     glfwGetWindowSize(_window_id, &width, &height);
-    sphere_shader.activate();
-    sphere_shader.setVec3("viewPos", scene.GetCamera().GetCameraPosition());
+    sphere_shader->activate();
+    sphere_shader->setVec3("viewPos", scene.GetCamera().GetCameraPosition());
 
-    sphere_shader.setMat4("model", glm::mat4(1));
-    sphere_shader.setMat4("view", scene.GetCamera().GetViewMatrix());
-    sphere_shader.setMat4("projection",
-                          scene.GetCamera().GetPerspectiveMatrix((float)width / (float)height));
+    sphere_shader->setMat4("model", glm::mat4(1));
+    sphere_shader->setMat4("view", scene.GetCamera().GetViewMatrix());
+    sphere_shader->setMat4("projection", scene.GetCamera().GetPerspectiveMatrix((float)width / (float)height));
 
-    sphere_shader.setVec3("light.position", scene.GetLight().position);
-    sphere_shader.setVec3("light.ambient", scene.GetLight().ambient);
-    sphere_shader.setVec3("light.diffuse", scene.GetLight().diffuse);
-    sphere_shader.setVec3("light.specular", scene.GetLight().specular);
+    sphere_shader->setVec3("light.position", scene.GetLight().position);
+    sphere_shader->setVec3("light.ambient", scene.GetLight().ambient);
+    sphere_shader->setVec3("light.diffuse", scene.GetLight().diffuse);
+    sphere_shader->setVec3("light.specular", scene.GetLight().specular);
 
-    sphere_shader.deactivate();
+    sphere_shader->deactivate();
+}
+Sphere::~Sphere()
+{
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+    }
 }
