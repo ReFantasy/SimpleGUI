@@ -5,7 +5,7 @@
 #ifndef GUI_MESH_H
 #define GUI_MESH_H
 
-#include "GL/glew.h"
+
 #include "glm/glm.hpp"
 #include <string>
 #include <vector>
@@ -42,39 +42,35 @@ public:
     /**
      * @brief
      */
-    void UpdateVertexDataToGLBuffer()
-    {
-        glBindVertexArray(VAO);
-        glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), &_vertices[0], GL_DYNAMIC_DRAW);
-        glBindVertexArray(0);
-    }
+    void UpdateVertexDataToGLBuffer();
 
-    virtual void Draw(GLuint shader_program);
+    virtual void Draw(unsigned int shader_program);
 
-    // protected:
+
     std::vector<Vertex> _vertices;
     std::vector<unsigned int> _indices;
-    unsigned int diffuseMap;
-    unsigned int specularMap;
+
 
 protected:
-    GLuint VAO = 0, VBO = 0, EBO = 0;
+    unsigned int VAO = 0, VBO = 0, EBO = 0;
 
 private:
     unsigned int LoadTexture(std::string image_path);
+    unsigned int diffuseMap;
+    unsigned int specularMap;
 };
 
-class Points : public Mesh
-{
-public:
-    explicit Points(std::vector<Vertex> vertices = std::vector<Vertex>{}) : Mesh(std::move(vertices), {})
-    {
-    }
-    void Draw(GLuint shader_program) override;
-    void SetPointSize(float sz)
-    {
-        glPointSize(sz > 0 ? sz : 1.0f);
-    }
-};
+//class Points : public Mesh
+//{
+//public:
+//    explicit Points(std::vector<Vertex> vertices = std::vector<Vertex>{}) : Mesh(std::move(vertices), {})
+//    {
+//    }
+//    void Draw(GLuint shader_program) override;
+//    void SetPointSize(float sz)
+//    {
+//        glPointSize(sz > 0 ? sz : 1.0f);
+//    }
+//};
 
 #endif // GUI_MESH_H

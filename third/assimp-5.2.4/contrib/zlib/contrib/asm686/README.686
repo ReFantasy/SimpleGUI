@@ -34,7 +34,7 @@ CFLAGS="-O3 -DASMV" ./configure
 make OBJA=match.o
 
 
-Update:
+UpdatePosition:
 
 I've been ignoring these assembly routines for years, believing that
 gcc's generated code had caught up with it sometime around gcc 2.95

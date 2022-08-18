@@ -416,7 +416,7 @@ FIXES/HOUSEKEEPING:
     - Fix xcode project files
     - Fix BlenderTesselator: offsetof operator
     - Invalid version in cmake file
-    - Update pstdint.h to latest greatest
+    - UpdatePosition pstdint.h to latest greatest
 
 
 3.3.0 (2016-07-05)

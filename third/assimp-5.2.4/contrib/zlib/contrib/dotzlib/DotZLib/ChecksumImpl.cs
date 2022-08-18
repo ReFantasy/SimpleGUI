@@ -130,7 +130,7 @@ namespace DotZLib
         /// <exception cref="ArgumentException">The sum of offset and count is larger than the length of <c>data</c></exception>
         /// <exception cref="NullReferenceException"><c>data</c> is a null reference</exception>
         /// <exception cref="ArgumentOutOfRangeException">Offset or count is negative.</exception>
-        public override void Update(byte[] data, int offset, int count)
+        public override void UpdatePosition(byte[] data, int offset, int count)
         {
             if (offset < 0 || count < 0) throw new ArgumentOutOfRangeException();
             if ((offset+count) > data.Length) throw new ArgumentException();

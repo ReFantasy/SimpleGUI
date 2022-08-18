@@ -6,6 +6,7 @@
 #include "iostream"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#include "GL/glew.h"
 
 Mesh::~Mesh()
 {
@@ -87,7 +88,7 @@ bool Mesh::GenGLBuffers()
     return true;
 }
 
-void Mesh::Draw(GLuint shader_program)
+void Mesh::Draw(unsigned int shader_program)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, diffuseMap);
@@ -96,9 +97,7 @@ void Mesh::Draw(GLuint shader_program)
 
     glUseProgram(shader_program);
     glBindVertexArray(VAO);
-
     glDrawElements(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_INT, 0);
-
     glBindVertexArray(0);
 }
 
@@ -110,13 +109,19 @@ void Mesh::LoadSpecularMap(std::string image_path)
 {
     specularMap = LoadTexture(image_path);
 }
-void Points::Draw(GLuint shader_program)
+void Mesh::UpdateVertexDataToGLBuffer()
 {
-    glUseProgram(shader_program);
     glBindVertexArray(VAO);
-
-    glDrawArrays(GL_POINTS, 0, _vertices.size());
-
+    glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), &_vertices[0], GL_DYNAMIC_DRAW);
     glBindVertexArray(0);
-    glUseProgram(0);
 }
+//void Points::Draw(GLuint shader_program)
+//{
+//    glUseProgram(shader_program);
+//    glBindVertexArray(VAO);
+//
+//    glDrawArrays(GL_POINTS, 0, _vertices.size());
+//
+//    glBindVertexArray(0);
+//    glUseProgram(0);
+//}

@@ -242,7 +242,7 @@ Sphere::~Sphere()
         glBindVertexArray(0);
     }
 }
-void Sphere::Update()
+void Sphere::UpdatePosition()
 {
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, instance_pos_vbo);

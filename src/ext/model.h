@@ -9,7 +9,7 @@
 #include "assimp/scene.h"
 
 #include "../gui/glsl_shader.h"
-#include "../gui/mesh.h"
+#include "mesh.h"
 #include <fstream>
 #include <iostream>
 #include <map>

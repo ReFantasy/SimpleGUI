@@ -152,7 +152,7 @@ namespace DotZLib
         /// </summary>
         /// <param name="data">The string to update the checksum with</param>
         /// <param name="encoding">The encoding to use</param>
-        void Update(string data, Encoding encoding);
+        void UpdatePosition(string data, Encoding encoding);
     }
 
 

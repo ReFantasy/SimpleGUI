@@ -21,7 +21,7 @@ add_subdirectory(src)
 include_directories(${PROJECT_SOURCE_DIR}/src/gui)
 include_directories(${PROJECT_SOURCE_DIR}/src/model)
 add_executable(demo main.cpp)
-target_link_libraries(demo glew glfw gui model)
+target_link_libraries(demo gui model glfw glew)
 
 
 

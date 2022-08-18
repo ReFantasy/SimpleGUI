@@ -94,7 +94,7 @@ linker flag.
 
 Always include the __operating system name and version__ (e.g. `Windows
 7 64-bit` or `Ubuntu 15.10`) and the __compiler name and version__ (e.g. `Visual
-C++ 2015 Update 2`).  If you are using an official release of GLFW,
+C++ 2015 UpdatePosition 2`).  If you are using an official release of GLFW,
 include the __GLFW release version__ (e.g. `3.1.2`), otherwise include the
 __GLFW commit ID__ (e.g.  `3795d78b14ef06008889cc422a1fb8d642597751`) from Git.
 

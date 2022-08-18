@@ -51,7 +51,7 @@ public:
      */
     void Draw();
 
-    void Update();
+    void UpdatePosition();
 
     std::vector<glm::vec3>& GetPosition()
     {
