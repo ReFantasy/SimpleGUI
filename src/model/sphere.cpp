@@ -3,11 +3,10 @@
 //
 
 #include "sphere.h"
-#include "glsl_shader.h"
 #include <GL/glew.h>
 #include "GLFW/glfw3.h"
+#include "glsl_shader.h"
 
-#include <utility>
 
 Sphere::Sphere(std::vector<glm::vec3> positions, std::vector<float> radius, std::vector<glm::vec3> color, int prec)
     : _positions(std::move(positions)), _radius(std::move(radius)), _color(std::move(color))
@@ -237,10 +236,8 @@ void Sphere::SetSceneInfo(GLFWwindow *_window_id, Scene &scene)
 }
 Sphere::~Sphere()
 {
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindVertexArray(0);
-    }
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 void Sphere::UpdatePosition()
 {

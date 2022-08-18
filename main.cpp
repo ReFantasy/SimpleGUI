@@ -1,6 +1,7 @@
 #include "gui.h"
 #include "mesh.h"
 #include "sphere.h"
+#include "Line.h"
 #include <filesystem>
 #include <memory>
 #include <random>
@@ -22,6 +23,8 @@ std::shared_ptr<Mesh> ground;
 std::shared_ptr<Mesh> CreateGround();
 std::shared_ptr<Mesh> box;
 std::shared_ptr<Mesh> CreateBox();
+std::shared_ptr<Line> line;
+std::shared_ptr<Line> CreateLine();
 
 std::shared_ptr<Sphere> sphere;
 std::shared_ptr<Sphere> CreateSphere();
@@ -33,6 +36,7 @@ public:
 
     void Render() override
     {
+
         /**
          * 定义随时间变换的光源
          */
@@ -49,7 +53,7 @@ public:
         new_light.ambient  = ambientColor;
         new_light.diffuse  = diffuseColor;
         new_light.specular = glm::vec3(1, 1, 1);
-        scene->GetLight()  = new_light;
+        //scene->GetLight()  = new_light;
 
         /**
          * 渲染物体
@@ -58,7 +62,11 @@ public:
         ground->Draw(this->_shader->GetShaderID());
         _shader->UseVertexColor(true);
         _shader->SetColor(glm::vec3(0.7, 0.7, 0.7));
-        box->Draw(this->_shader->GetShaderID());
+        //box->Draw(this->_shader->GetShaderID());
+
+        _shader->UseVertexColor(true);
+        line->SetSceneInfo(GetWindowID(), *scene);
+        line->Draw();
 
         auto &pos = sphere->GetPosition();
         for (auto &p : pos)
@@ -67,7 +75,7 @@ public:
         }
         sphere->UpdatePosition();
         sphere->SetSceneInfo(GetWindowID(), *scene);
-        sphere->Draw();
+        //sphere->Draw();
     }
 };
 
@@ -86,6 +94,8 @@ int main(int argc, char *argv[])
     // box->LoadDiffuseMap(std::string(source_dir.string() + "/resource/NasaShuttle/container2.png").c_str());
     // box->LoadSpecularMap(std::string(source_dir.string() + "/resource/NasaShuttle/container2_specular.png").c_str());
     ground = CreateGround();
+
+    line = CreateLine();
 
     sphere = CreateSphere();
 
@@ -181,4 +191,21 @@ std::shared_ptr<Mesh> CreateBox()
     auto g = std::make_shared<Mesh>(VV, indices);
     g->GenGLBuffers();
     return g;
+}
+
+std::shared_ptr<Line> CreateLine()
+{
+    glm::vec3 pt1(0,0,0);
+    glm::vec3 pt2(1,1,1);
+    glm::vec3 pt3(2,1,-1);
+    glm::vec3 pt4(2,1,-10);
+    std::vector<glm::vec3> points;
+    points.push_back(pt1);
+    points.push_back(pt2);
+    points.push_back(pt3);
+    points.push_back(pt4);
+
+    line = std::make_shared<Line>(points, points);
+    line->GenGLBuffers();
+    return line;
 }
