@@ -3,6 +3,7 @@
 #include "camera.h"
 
 glm::vec3 tmp_up;
+float Camera::fov = 45;
 
 Camera::Camera(glm::vec3 cam_pos, glm::vec3 cam_tar, glm::vec3 up) : cameraPos(cam_pos), cameraTarget(cam_tar)
 {

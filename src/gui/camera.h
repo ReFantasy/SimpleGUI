@@ -50,7 +50,7 @@ class Camera
   public:
     float zNear = 0.001;
     float zFar = FLT_MAX / 2.0f;
-    float fov = 45;
+    static float fov;
 };
 
 #endif
