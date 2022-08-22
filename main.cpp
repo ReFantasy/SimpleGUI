@@ -71,11 +71,11 @@ public:
         auto &pos = sphere->GetPosition();
         for (auto &p : pos)
         {
-            p[0] += 0.001;
+            p[1] += 0.001;
         }
         sphere->UpdatePosition();
         sphere->SetSceneInfo(GetWindowID(), *scene);
-        //sphere->Draw();
+        sphere->Draw();
     }
 };
 
