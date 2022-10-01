@@ -18,10 +18,11 @@ IF (WIN32)
     MESSAGE(STATUS "operating system is windows")
 ELSEIF (APPLE)
     MESSAGE(STATUS "operating system is Apple system.")
-    find_package(glfw3 REQUIRED)
 ELSEIF (UNIX)
 	MESSAGE(STATUS "operating system is UNIX-like OS.")
 ENDIF ()
+
+find_package(glfw3 REQUIRED)
 
 # 第三方库源码
 add_subdirectory(third)
