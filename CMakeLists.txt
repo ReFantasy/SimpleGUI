@@ -11,7 +11,17 @@ add_definitions(-DPROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 
 include_directories(${PROJECT_SOURCE_DIR}/third/GLM)
 
-find_package(glfw3 REQUIRED)
+
+
+# 输出平台信息
+IF (WIN32)
+    MESSAGE(STATUS "operating system is windows")
+ELSEIF (APPLE)
+    MESSAGE(STATUS "operating system is Apple system.")
+    find_package(glfw3 REQUIRED)
+ELSEIF (UNIX)
+	MESSAGE(STATUS "operating system is UNIX-like OS.")
+ENDIF ()
 
 # 第三方库源码
 add_subdirectory(third)
