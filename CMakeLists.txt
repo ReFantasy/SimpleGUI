@@ -11,6 +11,8 @@ add_definitions(-DPROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
 
 include_directories(${PROJECT_SOURCE_DIR}/third/GLM)
 
+find_package(glfw3 REQUIRED)
+
 # 第三方库源码
 add_subdirectory(third)
 

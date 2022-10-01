@@ -44,3 +44,4 @@ build/
 .vscode/
 clion_build/
 install/
+.cache/
