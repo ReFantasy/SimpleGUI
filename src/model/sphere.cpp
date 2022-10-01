@@ -206,6 +206,8 @@ bool Sphere::GenGLBuffers()
     glVertexAttribDivisor(3, 1);
 
     glBindVertexArray(0);
+
+    return true;
 }
 void Sphere::Draw()
 {

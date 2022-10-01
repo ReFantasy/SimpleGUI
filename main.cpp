@@ -73,9 +73,9 @@ public:
         {
             p[1] += 0.001;
         }
-        sphere->UpdatePosition();
-        sphere->SetSceneInfo(GetWindowID(), *scene);
-        sphere->Draw();
+        //sphere->UpdatePosition();
+        //sphere->SetSceneInfo(GetWindowID(), *scene);
+        //sphere->Draw();
     }
 };
 

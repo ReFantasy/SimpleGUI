@@ -7,7 +7,7 @@
 #include "vector"
 #include "memory"
 #include "glm/glm.hpp"
-#include "Scene.h"
+#include "scene.h"
 
 class GLSLShader;
 class GLFWwindow;
