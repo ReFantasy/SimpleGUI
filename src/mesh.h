@@ -6,7 +6,7 @@
 #define GUI_MESH_H
 
 #include "glm/glm.hpp"
-//#include "glsl_shader.h"
+
 #include <string>
 #include <vector>
 
@@ -42,7 +42,6 @@ class Mesh
 
   protected:
     unsigned int VAO = 0, VBO = 0, EBO = 0;
-    // GLSLShader _shader;
 };
 
 #endif // GUI_MESH_H

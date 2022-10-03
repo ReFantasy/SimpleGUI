@@ -1,6 +1,4 @@
 #include "gui_base.h"
-#include "GL/glew.h"
-#include "GLFW/glfw3.h"
 
 int GUIBase::InitOpenGL()
 {
