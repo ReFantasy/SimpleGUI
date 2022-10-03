@@ -15,11 +15,16 @@ link_libraries(${OPENGL_LIBRARIES})
 IF (WIN32)
     MESSAGE(STATUS "operating system is windows")
 ELSEIF (APPLE)
-    MESSAGE(STATUS "operating system is Apple system.")
+    # GLFW
     include_directories("/opt/homebrew/Cellar/glfw/3.3.8/include")
+    link_directories("/opt/homebrew/Cellar/glfw/3.3.8/lib")
+    link_libraries(glfw)
+
+    #GLEW
+    include_directories("/opt/homebrew/Cellar/glew/2.2.0_1/include")
+    link_directories("/opt/homebrew/Cellar/glew/2.2.0_1/lib")
+    link_libraries(GLEW)
 ELSEIF (UNIX)
-	MESSAGE(STATUS "operating system is UNIX-like OS.")
-    #GLFW GLEW
     include_directories("/usr/include/")
 	include_directories("/usr/local/include/")
     link_directories("/usr/lib")

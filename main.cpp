@@ -13,9 +13,8 @@ T RandomNumber(const T &lo = 0, const T &hi = 1)
 
 int main(int argc, char *argv[])
 {
-    // std::cout << "ok" << std::endl;
-
     GUI gui{};
     gui.Show();
+
     return 0;
 }
