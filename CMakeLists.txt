@@ -27,11 +27,15 @@ ELSEIF (APPLE)
     # GLFW
     include_directories("/opt/homebrew/Cellar/glfw/3.3.8/include")
     link_directories("/opt/homebrew/Cellar/glfw/3.3.8/lib")
+    include_directories("/usr/local/Cellar/glfw/3.3.8/include")
+    link_directories("/usr/local/Cellar/glfw/3.3.8/lib")
     link_libraries(glfw)
 
     #GLEW
     include_directories("/opt/homebrew/Cellar/glew/2.2.0_1/include")
     link_directories("/opt/homebrew/Cellar/glew/2.2.0_1/lib")
+    include_directories("/usr/local/Cellar/glew/2.2.0_1/include")
+    link_directories("/usr/local/Cellar/glew/2.2.0_1/lib")
     link_libraries(GLEW)
 ELSEIF (UNIX)
     include_directories("/usr/include/")
