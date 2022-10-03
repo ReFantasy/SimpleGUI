@@ -13,7 +13,16 @@ link_libraries(${OPENGL_LIBRARIES})
 
 # 输出平台信息
 IF (WIN32)
-    MESSAGE(STATUS "operating system is windows")
+    SET(THIRD_LIBS_DIR "F:/ProjectCode/Simulation/third_party/WIN")
+    #GLFW
+    include_directories("${THIRD_LIBS_DIR}/glfw-3.3.5.bin.WIN64/include")
+    link_directories("${THIRD_LIBS_DIR}/glfw-3.3.5.bin.WIN64/lib-vc2019")
+    link_libraries(glfw3_mt)
+
+    #GLEW
+    include_directories("${THIRD_LIBS_DIR}/glew-2.1.0/include")
+    link_directories("${THIRD_LIBS_DIR}/glew-2.1.0/lib/Release/x64")
+    link_libraries(glew32s)# #define GLEW_STATIC on top of your code to use the static lib
 ELSEIF (APPLE)
     # GLFW
     include_directories("/opt/homebrew/Cellar/glfw/3.3.8/include")
