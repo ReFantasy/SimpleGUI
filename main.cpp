@@ -2,18 +2,18 @@
 #include "iostream"
 #include "random"
 
-template <typename T, typename Distribution = std::uniform_real_distribution<T>>
-T RandomNumber(const T &lo = 0, const T &hi = 1)
+class GUI3D : public GUI
 {
-    std::random_device dev;
-    std::mt19937 rng(dev());
-    Distribution dist(lo, hi);
-    return dist(rng);
-}
+  public:
+    void Render() override
+    {
+        // std::cout << "ok" << std::endl;
+    }
+};
 
 int main(int argc, char *argv[])
 {
-    GUI gui{};
+    GUI3D gui{};
     gui.Show();
 
     return 0;
