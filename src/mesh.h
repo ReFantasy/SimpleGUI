@@ -6,7 +6,7 @@
 #define GUI_MESH_H
 
 #include "glm/glm.hpp"
-#include "glsl_shader.h"
+//#include "glsl_shader.h"
 #include <string>
 #include <vector>
 
@@ -32,7 +32,7 @@ class Mesh
 
     void UpdateGLBuffer();
 
-    virtual void Draw(unsigned int shader_program);
+    virtual void Draw(unsigned int);
 
     std::vector<Vertex> _vertices;
     std::vector<unsigned int> _indices;
@@ -42,6 +42,7 @@ class Mesh
 
   protected:
     unsigned int VAO = 0, VBO = 0, EBO = 0;
+    // GLSLShader _shader;
 };
 
 #endif // GUI_MESH_H

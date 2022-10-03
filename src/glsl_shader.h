@@ -10,61 +10,59 @@
 class GLSLShader
 {
 public:
-    GLSLShader();
+  GLSLShader() { BuildInShader(); };
+  void BuildInShader();
 
-    void BuildInShader();
+  unsigned int GetShaderID() const;
 
-    void SetColor(glm::vec3 color);
-    void UseVertexColor(bool use_vertex_color = true);
+  void LoadShaderFromFile(const char *vertexPath, const char *fragmentPath,
+                          const char *geometryPath = nullptr);
 
-    unsigned int GetShaderID() const;
+  void LoadShaderFromString(std::string vertexCode, std::string fragmentCode,
+                            std::string geometryCode);
 
-    void LoadShaderFromFile(const char *vertexPath, const char *fragmentPath, const char *geometryPath = nullptr);
+  // activate the shader
+  // ------------------------------------------------------------------------
+  void activate();
 
-    void LoadShaderFromString(std::string vertexCode, std::string fragmentCode, std::string geometryCode);
+  void deactivate();
 
-    // activate the shader
-    // ------------------------------------------------------------------------
-    void activate();
+  // utility uniform functions
+  // ------------------------------------------------------------------------
+  void setBool(const std::string &name, bool value) const;
 
-    void deactivate();
+  // ------------------------------------------------------------------------
+  void setInt(const std::string &name, int value) const;
 
-    // utility uniform functions
-    // ------------------------------------------------------------------------
-    void setBool(const std::string &name, bool value) const;
+  // ------------------------------------------------------------------------
+  void setFloat(const std::string &name, float value) const;
 
-    // ------------------------------------------------------------------------
-    void setInt(const std::string &name, int value) const;
+  // ------------------------------------------------------------------------
+  void setVec2(const std::string &name, const glm::vec2 &value) const;
 
-    // ------------------------------------------------------------------------
-    void setFloat(const std::string &name, float value) const;
+  void setVec2(const std::string &name, float x, float y) const;
 
-    // ------------------------------------------------------------------------
-    void setVec2(const std::string &name, const glm::vec2 &value) const;
+  // ------------------------------------------------------------------------
+  void setVec3(const std::string &name, const glm::vec3 &value) const;
 
-    void setVec2(const std::string &name, float x, float y) const;
+  void setVec3(const std::string &name, float x, float y, float z) const;
 
-    // ------------------------------------------------------------------------
-    void setVec3(const std::string &name, const glm::vec3 &value) const;
+  // ------------------------------------------------------------------------
+  void setVec4(const std::string &name, const glm::vec4 &value) const;
 
-    void setVec3(const std::string &name, float x, float y, float z) const;
+  void setVec4(const std::string &name, float x, float y, float z, float w);
 
-    // ------------------------------------------------------------------------
-    void setVec4(const std::string &name, const glm::vec4 &value) const;
+  // ------------------------------------------------------------------------
+  void setMat2(const std::string &name, const glm::mat2 &mat) const;
 
-    void setVec4(const std::string &name, float x, float y, float z, float w);
+  // ------------------------------------------------------------------------
+  void setMat3(const std::string &name, const glm::mat3 &mat) const;
 
-    // ------------------------------------------------------------------------
-    void setMat2(const std::string &name, const glm::mat2 &mat) const;
-
-    // ------------------------------------------------------------------------
-    void setMat3(const std::string &name, const glm::mat3 &mat) const;
-
-    // ------------------------------------------------------------------------
-    void setMat4(const std::string &name, const glm::mat4 &mat) const;
+  // ------------------------------------------------------------------------
+  void setMat4(const std::string &name, const glm::mat4 &mat) const;
 
 private:
-    void checkCompileErrors(unsigned int shader, std::string type);
+  void checkCompileErrors(unsigned int shader, std::string type);
 
 protected:
     unsigned int ID = 0;

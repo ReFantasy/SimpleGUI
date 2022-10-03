@@ -1,5 +1,7 @@
+#include "glsl_shader.h"
 #include "gui.h"
 #include "iostream"
+#include "mesh.h"
 #include "random"
 
 class GUI3D : public GUI
@@ -14,7 +16,11 @@ class GUI3D : public GUI
 int main(int argc, char *argv[])
 {
     GUI3D gui{};
-    gui.Show();
 
+    Mesh mesh;
+
+    GLSLShader shader;
+
+    gui.Show();
     return 0;
 }

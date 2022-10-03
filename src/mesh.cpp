@@ -11,6 +11,7 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices)
     : _vertices(std::move(vertices)), _indices(std::move(indices))
 {
     GenGLBuffers();
+    //_shader.BuildInShader();
 }
 
 Mesh::~Mesh()
