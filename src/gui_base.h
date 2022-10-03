@@ -6,6 +6,9 @@
 
 #ifndef __GUI_BASE_H__
 #define __GUI_BASE_H__
+#ifdef _WIN32
+#define GLEW_STATIC
+#endif
 
 #include "glm/glm.hpp"
 #include <iostream>
