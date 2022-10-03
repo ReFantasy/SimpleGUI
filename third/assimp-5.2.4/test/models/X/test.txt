@@ -1,3 +1,0 @@
-Simple textured test box exported from Maya. Has a texture that does label each box side uniquely, but the sides do not match DirectX coordinate space.
-
-Is not readable using D3DXLoadFrameHierarchy, needs custom text parsing.
