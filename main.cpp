@@ -37,46 +37,47 @@ public:
     /**
      * 定义随时间变换的光源
      */
-    glm::vec3 lightColor;
-    lightColor.x = static_cast<float>(sin(glfwGetTime() * 2.0));
-    lightColor.y = static_cast<float>(sin(glfwGetTime() * 0.7));
-    lightColor.z = static_cast<float>(sin(glfwGetTime() * 1.3));
+    // glm::vec3 lightColor;
+    // lightColor.x = static_cast<float>(sin(glfwGetTime() * 2.0));
+    // lightColor.y = static_cast<float>(sin(glfwGetTime() * 0.7));
+    // lightColor.z = static_cast<float>(sin(glfwGetTime() * 1.3));
 
-    glm::vec3 diffuseColor =
-        lightColor * glm::vec3(0.8f); // decrease the influence
-    glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
+    // glm::vec3 diffuseColor =
+    //     lightColor * glm::vec3(0.8f); // decrease the influence
+    // glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // low influence
 
-    Light new_light;
-    new_light.position = glm::vec3(0, 2, 2);
-    new_light.ambient = ambientColor;
-    new_light.diffuse = diffuseColor;
-    new_light.specular = glm::vec3(1, 1, 1);
+    // Light new_light;
+    // new_light.position = glm::vec3(0, 2, 2);
+    // new_light.ambient = ambientColor;
+    // new_light.diffuse = diffuseColor;
+    // new_light.specular = glm::vec3(1, 1, 1);
     // scene->GetLight()  = new_light;
 
     /**
      * 渲染物体
      */
-    _shader->UseVertexColor(false);
-    ground->Draw(this->_shader->GetShaderID());
-    _shader->UseVertexColor(true);
-    _shader->SetColor(glm::vec3(0.7, 0.7, 0.7));
+    // _shader->UseVertexColor(false);
+    // ground->Draw(this->_shader->GetShaderID());
+    // _shader->UseVertexColor(true);
+    // _shader->SetColor(glm::vec3(0.7, 0.7, 0.7));
     // box->Draw(this->_shader->GetShaderID());
 
-    _shader->UseVertexColor(true);
-    line->SetSceneInfo(GetWindowID(), *scene);
-    line->Draw();
+    //_shader->UseVertexColor(true);
+    //line->SetSceneInfo(GetWindowID(), *scene);
+    //line->Draw();
 
-    auto &pos = sphere->GetPosition();
-    for (auto &p : pos) {
-      p[1] += 0.001;
-    }
-    sphere->UpdatePosition();
-    sphere->SetSceneInfo(GetWindowID(), *scene);
-    sphere->Draw();
+    // auto &pos = sphere->GetPosition();
+    // for (auto &p : pos) {
+    //   p[1] += 0.001;
+    // }
+    //sphere->UpdatePosition();
+    //sphere->SetSceneInfo(GetWindowID(), *scene);
+    //sphere->Draw();
   }
 };
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) 
+{
   std::filesystem::path source_dir(PROJECT_SOURCE_DIR);
 
   GUI3D gui(800, 600);
@@ -88,16 +89,13 @@ int main(int argc, char *argv[]) {
       .UpdateCamTar(glm::vec3(0, 0, 0));
   gui.scene->GetLight().position = glm::vec3(0, 2, 2);
 
-  box = CreateBox();
-  // box->LoadDiffuseMap(std::string(source_dir.string() +
-  // "/resource/NasaShuttle/container2.png").c_str());
-  // box->LoadSpecularMap(std::string(source_dir.string() +
-  // "/resource/NasaShuttle/container2_specular.png").c_str());
+  //box = CreateBox();
+  
   ground = CreateGround();
 
-  line = CreateLine();
+  //line = CreateLine();
 
-  sphere = CreateSphere();
+  //sphere = CreateSphere();
 
   gui.Show();
 
