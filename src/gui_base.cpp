@@ -53,19 +53,11 @@ int GUIBase::InitOpenGL()
     return 0;
 }
 
-// int GUIBase::WindowWidth() {
-//   int width = -1;
-//   int height = -1;
-//   glfwGetWindowSize(_window_id, &width, &height);
-//   return width;
-// }
-
-// int GUIBase::WindowHeight() {
-//   int width = -1;
-//   int height = -1;
-//   glfwGetWindowSize(_window_id, &width, &height);
-//   return height;
-// }
+void GUIBase::SetWindowTitle(std::string title)
+{
+    _window_title = title;
+    glfwSetWindowTitle(_window_id, _window_title.c_str());
+}
 
 void GUIBase::Show()
 {
