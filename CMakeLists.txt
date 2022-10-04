@@ -5,7 +5,7 @@ ADD_DEFINITIONS(-DUNICODE)
 ADD_DEFINITIONS(-D_UNICODE)
 
 set(CMAKE_CXX_STANDARD 11)
-
+set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/install)
 # OpenGL
 find_package(OpenGL REQUIRED)
 include_directories( ${OPENGL_INCLUDE_DIRS} )
@@ -55,8 +55,8 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 # 项目源码
 add_subdirectory(src)
 
-
-add_executable(demo main.cpp)
+AUX_SOURCE_DIRECTORY(. SRC_LIST)
+add_executable(demo ${SRC_LIST})
 target_link_libraries(demo gui)
 
 

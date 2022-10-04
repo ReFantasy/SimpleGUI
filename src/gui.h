@@ -92,6 +92,14 @@ public:
     if (Zoom > 45.0f)
       Zoom = 45.0f;
   }
+  void updateYaw(float new_yaw) {
+    Yaw = new_yaw;
+    updateCameraVectors();
+  }
+  void updatePitch(float new_Pitch) {
+    Pitch = new_Pitch;
+    updateCameraVectors();
+  }
 
 private:
   // calculates the front vector from the Camera's (updated) Euler Angles
@@ -125,8 +133,6 @@ class GUI : public GUIBase
     virtual void Render(){};
 
     Camera camera;
-
-  protected:
     GLSLShader _shader;
 
   private:

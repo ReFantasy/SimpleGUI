@@ -1,5 +1,6 @@
 #include "glsl_shader.h"
-
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 void GLSLShader::BuildInShader() {
   std::string vs = R"(
          	#version 410 core
