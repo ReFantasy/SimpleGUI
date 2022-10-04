@@ -1,6 +1,11 @@
 #include "gui_base.h"
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
+
+#include "dear_imgui/backends/imgui_impl_glfw.h"
+#include "dear_imgui/backends/imgui_impl_opengl3.h"
+#include "dear_imgui/imgui.h"
+
 int GUIBase::InitOpenGL()
 {
     /* 初始化 GLFW */
@@ -48,24 +53,64 @@ int GUIBase::InitOpenGL()
     return 0;
 }
 
+// int GUIBase::WindowWidth() {
+//   int width = -1;
+//   int height = -1;
+//   glfwGetWindowSize(_window_id, &width, &height);
+//   return width;
+// }
+
+// int GUIBase::WindowHeight() {
+//   int width = -1;
+//   int height = -1;
+//   glfwGetWindowSize(_window_id, &width, &height);
+//   return height;
+// }
+
 void GUIBase::Show()
 {
-    /* 窗口循环 */
-    while (!glfwWindowShouldClose(_window_id))
-    {
-        /* 清除缓存 */
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(_bg_color[0], _bg_color[1], _bg_color[2], _bg_color[3]);
+  // Setup Dear ImGui context
+  IMGUI_CHECKVERSION();
+  ImGui::CreateContext();
+  ImGuiIO &io = ImGui::GetIO();
+  (void)io;
+  // io.Fonts->AddFontFromFileTTF("F:/ProjectCode/Simulation/rc/consola.ttf",
+  // 20); io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable
+  // Keyboard Controls io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad; //
+  // Enable Gamepad Controls
+  //  Setup Dear ImGui style
+  ImGui::StyleColorsDark();
+  // ImGui::StyleColorsLight();
+  // ImGui::StyleColorsClassic();
+  //  Setup Platform/Renderer backends
+  ImGui_ImplGlfw_InitForOpenGL(_window_id, true);
+  ImGui_ImplOpenGL3_Init(NULL);
 
-        /* 渲染 */
-        BaseRender();
+  /* 窗口循环 */
+  while (!glfwWindowShouldClose(_window_id)) {
+    // Start the Dear ImGui frame
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
 
-        /* Swap front and back buffers */
-        glfwSwapBuffers(_window_id);
+    /* 清除缓存 */
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(_bg_color[0], _bg_color[1], _bg_color[2], _bg_color[3]);
 
-        /* Poll for and process events */
-        glfwPollEvents();
-    }
+    /* 渲染 */
+    BaseRender();
+
+    // Rendering DearImgui
+    ImGui::Render();
+    // glViewport(0, 0, width, height);
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    /* Swap front and back buffers */
+    glfwSwapBuffers(_window_id);
+
+    /* Poll for and process events */
+    glfwPollEvents();
+  }
 
     glfwTerminate();
 }

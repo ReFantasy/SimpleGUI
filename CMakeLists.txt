@@ -47,7 +47,7 @@ ELSEIF (UNIX)
     link_libraries(${OPENGL_LIBRARIES} glfw GLEW ${GLSLCOOKBOOK_LIBS})
 ENDIF ()
 
-
+include_directories(${PROJECT_SOURCE_DIR}/src/dear_imgui)
 include_directories(${PROJECT_SOURCE_DIR}/third_party/GLM)
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
