@@ -58,6 +58,11 @@ class GUIBase
      */
     static void SetVsync(bool vsync = true);
 
+    void SetWindowTitle(std::string title)
+    {
+        _window_title = title;
+    }
+
     /**
      * 设置窗口背景颜色
      * @param bg_color RGB颜色
