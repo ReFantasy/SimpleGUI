@@ -17,6 +17,7 @@ int g_mouse_buttons = 0, g_mouse_old_x = 0, g_mouse_old_y = 0;
 float g_rotate_x = 0.0, g_rotate_y = 0.0, g_translate_z = 0.0;
 
 std::shared_ptr<Mesh> mesh_ptr;
+std::shared_ptr<Mesh> mesh_ptr2;
 
 class GUI3D : public GUI
 {
@@ -30,6 +31,11 @@ class GUI3D : public GUI
       _shader.setMat4("view", view);
 
       mesh_ptr->Draw(_shader.GetShaderID());
+
+      for (auto &v : mesh_ptr2->_vertices)
+          v.Position += glm::vec3(0, -0.001, 0);
+      mesh_ptr2->UpdateGLBuffer();
+      mesh_ptr2->Draw(_shader.GetShaderID());
 
       // dear imgui widgets
       {
@@ -100,6 +106,11 @@ int main(int argc, char *argv[])
   indices.push_back(1);
   indices.push_back(2);
   mesh_ptr = std::make_shared<Mesh>(vertices, indices);
+
+  std::vector<Vertex> vertices2 = vertices;
+  for (auto &v : vertices2)
+      v.Position += glm::vec3(0, -1, 0);
+  mesh_ptr2 = std::make_shared<Mesh>(vertices2, indices);
 
   gui->Show();
   return 0;

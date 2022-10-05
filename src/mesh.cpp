@@ -7,8 +7,7 @@
 
 #include "GL/glew.h"
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices)
-    : _vertices(std::move(vertices)), _indices(std::move(indices))
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices) : _vertices(vertices), _indices(indices)
 {
     GenGLBuffers();
 }
@@ -32,7 +31,7 @@ bool Mesh::GenGLBuffers()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
     glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), &_vertices[0],
-                 GL_STATIC_DRAW); // GL_STATIC_DRAW GL_DYNAMIC_DRAW
+                 GL_DYNAMIC_DRAW); // GL_STATIC_DRAW GL_DYNAMIC_DRAW
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indices.size() * sizeof(unsigned int), &_indices[0], GL_DYNAMIC_DRAW);
 
@@ -63,6 +62,7 @@ void Mesh::Draw(unsigned int shader_program)
 void Mesh::UpdateGLBuffer()
 {
     glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), &_vertices[0], GL_DYNAMIC_DRAW);
     glBindVertexArray(0);
 }
