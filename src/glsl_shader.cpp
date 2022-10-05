@@ -1,8 +1,9 @@
 #include "glsl_shader.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-void GLSLShader::BuildInShader() {
-  std::string vs = R"(
+void GLSLShader::BuildInShader()
+{
+    std::string vs = R"(
          	#version 410 core
             layout(location = 0) in vec3 _position;
          	layout(location = 1) in vec3 _normal;
@@ -21,7 +22,7 @@ void GLSLShader::BuildInShader() {
             }
             )";
 
-  std::string fs = R"(
+    std::string fs = R"(
         	#version 410 core
             in vec3 Color;
             out vec4 FragColor;
@@ -32,7 +33,7 @@ void GLSLShader::BuildInShader() {
             }
             )";
 
-  LoadShaderFromString(vs, fs, std::string{});
+    LoadShaderFromString(vs, fs, std::string{});
 }
 
 unsigned int GLSLShader::GetShaderID() const
@@ -71,7 +72,7 @@ void GLSLShader::LoadShaderFromFile(const char *vertexPath, const char *fragment
         vShaderFile.close();
         fShaderFile.close();
         // convert stream into string
-        vertexCode   = vShaderStream.str();
+        vertexCode = vShaderStream.str();
         fragmentCode = fShaderStream.str();
         // if geometry shader path is present, also load a geometry shader
         if (geometryPath != nullptr)
@@ -122,7 +123,7 @@ void GLSLShader::LoadShaderFromString(std::string vertexCode, std::string fragme
     if (!geometryCode.empty())
     {
         const char *gShaderCode = geometryCode.c_str();
-        geometry                = glCreateShader(GL_GEOMETRY_SHADER);
+        geometry = glCreateShader(GL_GEOMETRY_SHADER);
         glShaderSource(geometry, 1, &gShaderCode, NULL);
         glCompileShader(geometry);
         checkCompileErrors(geometry, "GEOMETRY");
@@ -131,13 +132,15 @@ void GLSLShader::LoadShaderFromString(std::string vertexCode, std::string fragme
     ID = glCreateProgram();
     glAttachShader(ID, vertex);
     glAttachShader(ID, fragment);
-    if (!geometryCode.empty()) glAttachShader(ID, geometry);
+    if (!geometryCode.empty())
+        glAttachShader(ID, geometry);
     glLinkProgram(ID);
     checkCompileErrors(ID, "PROGRAM");
 
     glDeleteShader(vertex);
     glDeleteShader(fragment);
-    if (!geometryCode.empty()) glDeleteShader(geometry);
+    if (!geometryCode.empty())
+        glDeleteShader(geometry);
 }
 void GLSLShader::activate()
 {
