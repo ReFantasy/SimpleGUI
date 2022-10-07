@@ -49,11 +49,10 @@ ELSEIF (UNIX)
     link_libraries(${OPENGL_LIBRARIES} glfw GLEW ${GLSLCOOKBOOK_LIBS})
 ENDIF ()
 
-include_directories(${PROJECT_SOURCE_DIR}/src/dear_imgui)
-include_directories(${PROJECT_SOURCE_DIR}/third_party/GLM)
-include_directories(${PROJECT_SOURCE_DIR}/third_party/eigen-3.4.0)
 include_directories(${PROJECT_SOURCE_DIR}/src)
-
+include_directories(${PROJECT_SOURCE_DIR}/src/dear_imgui)
+include_directories(${PROJECT_SOURCE_DIR}/third_party/)
+include_directories(${PROJECT_SOURCE_DIR}/third_party/GLM)
 
 # 项目源码
 add_subdirectory(src)
