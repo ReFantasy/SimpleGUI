@@ -66,15 +66,16 @@ void GUIBase::Show()
   ImGui::CreateContext();
   ImGuiIO &io = ImGui::GetIO();
   (void)io;
-  // io.Fonts->AddFontFromFileTTF("F:/ProjectCode/Simulation/rc/consola.ttf",
-  // 20); io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable
-  // Keyboard Controls io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad; //
-  // Enable Gamepad Controls
-  //  Setup Dear ImGui style
-  ImGui::StyleColorsDark();
+  io.Fonts->AddFontFromFileTTF(std::string(std::string(GUI_SOURCE_DIR) + std::string("/consola.ttf")).c_str(), 13);
+  //  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable
+  //   Keyboard Controls io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad; //
+  //   Enable Gamepad Controls
+  //    Setup Dear ImGui style
+
+  // ImGui::StyleColorsDark();
   // ImGui::StyleColorsLight();
   // ImGui::StyleColorsClassic();
-  //  Setup Platform/Renderer backends
+  //   Setup Platform/Renderer backends
   ImGui_ImplGlfw_InitForOpenGL(_window_id, true);
   ImGui_ImplOpenGL3_Init(NULL);
 
