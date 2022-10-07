@@ -1,3 +1,6 @@
+#include "Eigen/Dense"
+#include "Eigen/src/Core/Matrix.h"
+#include "Eigen/src/Core/util/Constants.h"
 #include "GLFW/glfw3.h"
 #include "glm/fwd.hpp"
 #include "glsl_shader.h"
@@ -8,6 +11,7 @@
 #include "mesh.h"
 #include "random"
 #include <memory>
+using Vector3 = Eigen::Vector3f;
 
 void MOUSE_BUTTON_CALLBACK(GLFWwindow *window, int button, int action,
                            int mods);
@@ -33,7 +37,10 @@ class GUI3D : public GUI
       mesh_ptr->Draw(_shader.GetShaderID());
 
       for (auto &v : mesh_ptr2->_vertices)
-          v.Position += glm::vec3(0, -0.001, 0);
+      {
+          // v.Position += glm::vec3(0, -0.001, 0);
+          v.Position += Eigen::Vector3f{0, -0.001, 0};
+      }
       mesh_ptr2->UpdateGLBuffer();
       mesh_ptr2->Draw(_shader.GetShaderID());
 
@@ -82,38 +89,42 @@ std::shared_ptr<GUI3D> gui;
 
 int main(int argc, char *argv[])
 {
-  // 创建GUI实例,并设置鼠标回调
-  gui = std::make_shared<GUI3D>();
+    gui = std::make_shared<GUI3D>();
 
-  glfwSetMouseButtonCallback(gui->GetWindowID(), MOUSE_BUTTON_CALLBACK);
-  glfwSetCursorPosCallback(gui->GetWindowID(), mouse_callback);
-  glfwSetScrollCallback(gui->GetWindowID(), scroll_callback);
+    glfwSetMouseButtonCallback(gui->GetWindowID(), MOUSE_BUTTON_CALLBACK);
+    glfwSetCursorPosCallback(gui->GetWindowID(), mouse_callback);
+    glfwSetScrollCallback(gui->GetWindowID(), scroll_callback);
 
-  Vertex v1;
-  v1.Position = glm::vec3(0, 0, 0);
-  v1.Color = glm::vec3(1, 0, 0);
-  Vertex v2;
-  v2.Position = glm::vec3(1, 0, 0);
-  Vertex v3;
-  v3.Position = glm::vec3(0.5, 1, 0);
-  std::vector<Vertex> vertices;
-  vertices.push_back(v1);
-  vertices.push_back(v2);
-  vertices.push_back(v3);
+    Vertex v1;
+    v1.Position = Vector3{0, 0, 0};
+    v1.Color = Vector3(1, 0, 0);
+    Vertex v2;
+    v2.Position = Vector3(1, 0, 0);
+    Vertex v3;
+    v3.Position = Vector3(0.5, 1, 0);
+    std::vector<Vertex> vertices;
+    vertices.push_back(v1);
+    vertices.push_back(v2);
+    vertices.push_back(v3);
 
-  std::vector<unsigned int> indices;
-  indices.push_back(0);
-  indices.push_back(1);
-  indices.push_back(2);
-  mesh_ptr = std::make_shared<Mesh>(vertices, indices);
+    std::vector<unsigned int> indices;
+    indices.push_back(0);
+    indices.push_back(1);
+    indices.push_back(2);
+    mesh_ptr = std::make_shared<Mesh>(vertices, indices);
 
-  std::vector<Vertex> vertices2 = vertices;
-  for (auto &v : vertices2)
-      v.Position += glm::vec3(0, -1, 0);
-  mesh_ptr2 = std::make_shared<Mesh>(vertices2, indices);
+    std::vector<Vertex> vertices2 = vertices;
+    for (auto &v : vertices2)
+        v.Position += Vector3(0, -1, 0);
+    mesh_ptr2 = std::make_shared<Mesh>(vertices2, indices);
 
-  gui->Show();
-  return 0;
+    gui->Show();
+
+    // Eigen::Matrix<float, 2, 3, Eigen::RowMajor> m3;
+    //  m3 << 1, 2, 3, 4, 5, 6;
+    //  float *d = m3.data();
+    //  std::cout << d[1] << std::endl;
+    return 0;
 }
 
 void MOUSE_BUTTON_CALLBACK(GLFWwindow *window, int button, int action,

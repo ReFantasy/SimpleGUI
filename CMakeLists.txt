@@ -6,7 +6,7 @@ ADD_DEFINITIONS(-D_UNICODE)
 
 add_definitions(-DGUI_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/install)
 # OpenGL
 find_package(OpenGL REQUIRED)
@@ -51,6 +51,7 @@ ENDIF ()
 
 include_directories(${PROJECT_SOURCE_DIR}/src/dear_imgui)
 include_directories(${PROJECT_SOURCE_DIR}/third_party/GLM)
+include_directories(${PROJECT_SOURCE_DIR}/third_party/eigen-3.4.0)
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
 
