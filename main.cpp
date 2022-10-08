@@ -90,6 +90,7 @@ std::shared_ptr<GUI3D> gui;
 int main(int argc, char *argv[])
 {
     gui = std::make_shared<GUI3D>();
+    // gui->SetWindowSize(400, 400);
 
     glfwSetMouseButtonCallback(gui->GetWindowID(), MOUSE_BUTTON_CALLBACK);
     glfwSetCursorPosCallback(gui->GetWindowID(), mouse_callback);

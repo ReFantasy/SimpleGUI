@@ -59,6 +59,11 @@ void GUIBase::SetWindowTitle(std::string title)
     glfwSetWindowTitle(_window_id, _window_title.c_str());
 }
 
+void GUIBase::SetWindowSize(int w, int h)
+{
+    glfwSetWindowSize(_window_id, w, h);
+}
+
 void GUIBase::Show()
 {
   // Setup Dear ImGui context
